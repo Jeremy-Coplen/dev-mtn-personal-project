@@ -20,6 +20,7 @@ function NavBar(props) {
                         <Link to="/teams"><button>Teams</button></Link>
                         <Link to="/account"><img className="profile_image" src={profile_image} alt="profile"/></Link>
                         <h3>{username}</h3>
+                        <a href="http://localhost:3000/logout"><button>Logout</button></a>
                     </div>
             }
         </div>

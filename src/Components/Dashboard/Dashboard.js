@@ -6,17 +6,16 @@ import { connect } from "react-redux"
 import { getUserData } from "../../Ducks/reducer"
 
 class Dashboard extends Component {
-    componentDidMount() {
-        axios.get("/api/user-data")
-        .then(res => {
-            this.props.getUserData(res.data)
-        })
-        .catch((err) => {
+     async componentDidMount() {
+        try {
+            let userRes = await axios.get("/api/user-data")
+            this.props.getUserData(userRes.data)
+        }catch(err) {
             if(err.response.status === 401) {
                 alert("Go Login")
                 this.props.history.push("/")
             }
-        })
+        }
     }
 
     render() {

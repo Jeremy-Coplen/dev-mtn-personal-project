@@ -50,8 +50,24 @@ module.exports = {
         }
     },
 
+    getUserBoards: async (req, res) => {
+        const db = req.app.get("db")
+
+        try {
+            let boardsRes = await db.get_user_boards([req.session.user.user_id])
+            res.status(200).send(boardsRes)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
     logout: (req, res) => {
         req.session.destroy()
-        res.redirect("http://localhost:3000/#/")
+        try {
+            res.redirect("http://localhost:3000/#/")
+        }catch(err){
+            console.log(err)
+        }
+        
     }
 }
