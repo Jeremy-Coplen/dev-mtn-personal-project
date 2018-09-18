@@ -11,7 +11,8 @@ app.use(express.json())
 const {
     SERVER_PORT,
     SECRET,
-    CONNECTION_STRING
+    CONNECTION_STRING,
+    ENVIRONMENT
 } = process.env
 
 app.use(session({
