@@ -1,5 +1,5 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
 function NavBar(props) {
     console.log(props)
@@ -11,7 +11,10 @@ function NavBar(props) {
                     null
                 :
                     <div>
-                        <h1>NavBar</h1>
+                        <img src="" alt="logo"/>
+                        <Link to="/dashboard"><button>Dashboard</button></Link>
+                        <Link to="/boards"><button>Boards</button></Link>
+                        <Link to="/teams"><button>Teams</button></Link>
                     </div>
             }
         </div>

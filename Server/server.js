@@ -3,6 +3,8 @@ const express = require("express")
 const session = require("express-session")
 const massive = require("massive")
 
+const c = require("./Controllers/controller")
+
 const app = express()
 app.use(express.json())
 
@@ -17,6 +19,10 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }))
+
+app.get("/auth/callback", c.login)
+app.get("/api/user-data", c.getUserData)
+app.get("/logout", c.logout)
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db)
