@@ -55,7 +55,8 @@ module.exports = {
 
         try {
             let boardsRes = await db.get_user_boards([req.session.user.user_id])
-            res.status(200).send(boardsRes)
+            req.session.user.boards = boardsRes
+            res.status(200).send(req.session.user)
         }catch(err) {
             console.log(err)
         }
