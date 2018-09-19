@@ -62,7 +62,7 @@ module.exports = {
         }
     },
 
-    getBoardCardInfo: async (req, res) => {
+    getBoardInfo: async (req, res) => {
         const db = req.app.get("db")
         const results = []
 
@@ -71,6 +71,8 @@ module.exports = {
             results.push({type: "board", data: boardRes})
             let cardsRes = await db.get_board_cards([Number(req.params.boardid)])
             results.push({type: "cards", data: cardsRes})
+            let tasksRes = await db.get_card_tasks([Number(req.params.boardid)])
+            tasksRes ? results.push({type: "tasks", data: tasksRes}) : results.push({type: "tasks", data: ["none"]})
             res.status(200).send(results)
         }catch(err) {
             console.log(err)
