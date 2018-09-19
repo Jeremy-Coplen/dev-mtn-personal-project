@@ -59,3 +59,9 @@ create table boards_cards (
     board_id integer references boards(board_id),
     card_id integer references cards(card_id)
 );
+
+create table cards_tasks (
+    id serial primary key,
+    card_id integer references cards(card_id),
+    task_id integer references tasks(task_id)
+);

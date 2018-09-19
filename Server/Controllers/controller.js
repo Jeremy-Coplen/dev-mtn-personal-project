@@ -62,6 +62,21 @@ module.exports = {
         }
     },
 
+    getBoardCardInfo: async (req, res) => {
+        const db = req.app.get("db")
+        const results = []
+
+        try {
+            let boardRes = await db.get_one_board([Number(req.params.userid), Number(req.params.boardid)])
+            results.push({type: "board", data: boardRes})
+            let cardsRes = await db.get_board_cards([Number(req.params.boardid)])
+            results.push({type: "cards", data: cardsRes})
+            res.status(200).send(results)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
     logout: (req, res) => {
         req.session.destroy()
         try {
