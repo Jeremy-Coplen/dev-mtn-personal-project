@@ -1,15 +1,35 @@
 import React, { Component } from "react"
+import "./TaskModal.css"
 
 class TaskModal extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            show: false
+            name: this.props.task.task_name,
+            details: this.props.task.task_details,
+            editingName: false,
+            editingDetails: false
         }
+        this.updateEditing = this.updateEditing.bind(this)
+        this.updateInput = this.updateInput.bind(this)
+    }
+
+    updateEditing(e) {
+        this.setState({
+            [e.target.name]: !e.target.value
+        })
+    }
+
+    updateInput(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     render() {
+        const showHideClassName = this.props.show ? "task_display" : "task_display_none"
+        console.log("Show", this.props.show, "classname", showHideClassName)
         return (
             <div className={showHideClassName}>
                 <div>
@@ -41,9 +61,11 @@ class TaskModal extends Component {
                                 value={this.state.details}
                                 onChange={this.updateInput} />
                     }
-                    <button onClick={() => this.hideTask()}>Close</button>
+                    <button onClick={() => this.props.closeTask()}>Close</button>
                 </div>
             </div>
         )
     }
 }
+
+export default TaskModal

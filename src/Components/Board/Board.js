@@ -4,7 +4,7 @@ import axios from "axios"
 import { connect } from "react-redux"
 import { getUserData } from "../../Ducks/reducer"
 
-import Task from "../Task/Task"
+import Card from "../Card/Card"
 
 class Board extends Component {
     constructor(props) {
@@ -12,16 +12,8 @@ class Board extends Component {
 
         this.state = {
             boardInfo: {},
-            cardInfo: {},
-            taskInfo: {},
-            show: false,
-            name: "",
-            details: "",
-            editingName: false,
-            editingDetails: false
+            cardInfo: []
         }
-        this.updateEditing = this.updateEditing.bind(this)
-        this.updateInput = this.updateInput.bind(this)
     }
 
 
@@ -40,87 +32,36 @@ class Board extends Component {
             let boardRes = await axios.get(`/api/board-cards/${this.props.user.user_id}/${this.props.match.params.boardid}`)
             this.setState({
                 boardInfo: boardRes.data[0],
-                cardInfo: boardRes.data[1],
-                taskInfo: boardRes.data[2]
+                cardInfo: boardRes.data[1]
             })
         } catch (err) {
             console.log(err)
         }
     }
 
-    updateEditing(e) {
-        this.setState({
-            [e.target.name]: !e.target.value
-        })
-    }
-
-    updateInput(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-
-    showTask() {
-        this.setState({
-            show: true
-        })
-    }
-
-    hideTask() {
-        this.setState({
-            show: false
-        })
-    }
-
     render() {
-        console.log(this.state)
+        if(this.state.cardInfo) {
+          var card = this.state.cardInfo.map((card, i) => {
+                return (
+                    <Card key={i} card={card}/>
+                )
+            })
+        }
         return (
             <div>
                 {
-                    this.state.boardInfo.data
+                    this.state.boardInfo
                         ?
                         <div>
-                            <img src={this.state.boardInfo.data[0].board_image} alt="" />
-                            <h1>{this.state.boardInfo.data[0].board_name}</h1>
-                            <h1>{this.state.boardInfo.data[0].board_type}</h1>
+                            <img src={this.state.boardInfo.board_image} alt="board" />
+                            <h1>{this.state.boardInfo.board_name}</h1>
+                            <h1>{this.state.boardInfo.board_type}</h1>
                         </div>
                         :
                         null
                 }
-                {
-                    this.state.cardInfo.data
-                        ?
-                        <div>
-                            {
-                                this.state.cardInfo.data.map(card => {
-                                    return (
-                                        <div key={card.card_id}>
-                                            <h2>{card.card_name}</h2>
-                                            {
-                                                this.state.taskInfo.data
-                                                    ?
-                                                    <div>
-                                                        {
-                                                            this.state.taskInfo.data.filter(task => task.card_id === card.card_id).map(task => {
-                                                                return (
-                                                                    <Task key={task.task_id} task_id={task.task_id} task_name={task.task_name} task_details={task.task_details}/>
-                                                                )
-                                                            })
-                                                        }
-                                                    </div>
-                                                    :
-                                                    null
-                                            }
-                                            <button>Add Task</button>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                        :
-                        null
-                }
-                <button>Add card</button>
+                {card}
+                <button>Add Card</button>
             </div>
         )
     }

@@ -68,12 +68,21 @@ module.exports = {
 
         try {
             let boardRes = await db.get_one_board([Number(req.params.userid), Number(req.params.boardid)])
-            results.push({type: "board", data: boardRes})
+            results.push(boardRes[0])
             let cardsRes = await db.get_board_cards([Number(req.params.boardid)])
-            results.push({type: "cards", data: cardsRes})
-            let tasksRes = await db.get_card_tasks([Number(req.params.boardid)])
-            tasksRes ? results.push({type: "tasks", data: tasksRes}) : results.push({type: "tasks", data: ["none"]})
+            results.push(cardsRes)
             res.status(200).send(results)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    getTaskInfo: async (req, res) => {
+        const db = req.app.get("db")
+
+        try{
+            let tasksRes = await db.get_card_tasks([Number(req.params.cardid)])
+            res.status(200).send(tasksRes)
         }catch(err) {
             console.log(err)
         }

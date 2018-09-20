@@ -38,6 +38,7 @@ app.get("/api/user-data", c.getUserData)
 app.get("/logout", c.logout)
 app.get("/api/user-boards", c.getUserBoards)
 app.get("/api/board-cards/:userid/:boardid", c.getBoardInfo)
+app.get("/api/tasks/:cardid", c.getTaskInfo)
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db)
