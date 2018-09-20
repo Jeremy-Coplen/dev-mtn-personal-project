@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import "./TaskModal.css"
 
 class TaskModal extends Component {
     constructor(props) {
@@ -16,50 +15,60 @@ class TaskModal extends Component {
     }
 
     updateEditing(e) {
+        console.log(e.target.name, e.target.value)
         this.setState({
-            [e.target.name]: !e.target.value
+            [e.target.name]: true
         })
     }
 
-    updateInput(e) {
+    updateInput(e, editName) {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
+    handleKeyPress(e, edit) {
+        console.log(e.key, edit)
+        if(e.key === "Enter" && this.state[e.target.name].length > 0) {
+            this.setState({
+                [edit]: false
+            })
+        }
+    }
+
     render() {
+        console.log("edit name", this.state.editingName, "edit details", this.state.editingDetails)
         const showHideClassName = this.props.show ? "task_display" : "task_display_none"
-        console.log("Show", this.props.show, "classname", showHideClassName)
         return (
             <div className={showHideClassName}>
                 <div>
                     {
                         this.state.editingName
                             ?
-                            <h1
-                                name="editingName"
-                                value={this.state.editingName}
-                                onClick={this.updateEditing}>
-                                {this.state.name}</h1>
-                            :
                             <input type="text"
                                 name="name"
                                 value={this.state.name}
-                                onChange={this.updateInput} />
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingName")} />
+                            :
+                            <button
+                                name="editingName"
+                                onClick={this.updateEditing}>
+                                {this.state.name}</button>
                     }
                     {
                         this.state.editingDetails
                             ?
-                            <h1
-                                name="editingDetails"
-                                value={this.state.editingDetails}
-                                onClick={this.updateEditing}>
-                                {this.state.details}</h1>
-                            :
                             <input type="text"
                                 name="details"
                                 value={this.state.details}
-                                onChange={this.updateInput} />
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingDetails")} />
+                            :
+                            <button
+                                name="editingDetails"
+                                onClick={this.updateEditing}>
+                                {this.state.details}</button>
                     }
                     <button onClick={() => this.props.closeTask()}>Close</button>
                 </div>

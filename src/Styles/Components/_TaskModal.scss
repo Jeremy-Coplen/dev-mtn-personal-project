@@ -1,0 +1,16 @@
+@import "../mixins";
+@import "../variables";
+
+.task_display {
+    background: $medium;
+    position: fixed;
+    opacity: 0.76;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.task_display_none {
+    display: none;
+}
