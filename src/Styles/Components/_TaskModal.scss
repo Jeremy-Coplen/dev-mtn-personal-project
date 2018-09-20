@@ -9,6 +9,14 @@
     left: 0;
     right: 0;
     bottom: 0;
+    div {
+        background: $dark;
+        opacity: 1;
+    }
+    button {
+        background: transparent;
+        border: 1px solid black;
+    }
 }
 
 .task_display_none {
