@@ -78,7 +78,6 @@ class Board extends Component {
     }
 
     render() {
-        console.log(this.state.editingName, this.state.editingType)
         if (this.state.cardInfo) {
             var card = this.state.cardInfo.map((card, i) => {
                 return (

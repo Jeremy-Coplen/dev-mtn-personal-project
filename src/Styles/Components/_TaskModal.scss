@@ -2,16 +2,14 @@
 @import "../variables";
 
 .task_display {
-    background: $medium;
+    background: $medium_opacity;
     position: fixed;
-    opacity: 0.76;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     div {
-        background: $dark;
-        opacity: 1;
+        background: $light;
     }
     button {
         background: transparent;
