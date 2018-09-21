@@ -88,6 +88,76 @@ module.exports = {
         }
     },
 
+    updateBoardImage: (req, res) => {
+        const db = req.app.get("db")
+
+        db.update_board_image([req.body.image, Number(req.params.boardid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateBoardName: (req, res) => {
+        const db = req.app.get("db")
+
+        db.update_board_name([req.body.name, Number(req.params.boardid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateBoardType: (req, res) => {
+        const db = req.app.get("db")
+
+        db.update_board_type([req.body.type, Number(req.params.boardid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateCardName: (req, res) => {
+        const db = req.app.get("db")
+
+        db.update_card_name([req.body.name, Number(req.params.cardid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateTaskName: (req, res) => {
+        const db = req.app.get("db")
+
+        db.update_task_name([req.body.name, Number(req.params.taskid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateTaskDetails: (req, res) => {
+        const db = req.app.get("db")
+
+        db.update_task_details([req.body.details, Number(req.params.taskid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateTaskArchived: (req, res) => {
+        const db = req.app.get("db")
+        
+        db.update_task_archived([req.body.archived, Number(req.params.taskid)])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
     logout: (req, res) => {
         req.session.destroy()
         try {

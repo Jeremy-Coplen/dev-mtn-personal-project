@@ -62,11 +62,20 @@ class Board extends Component {
         })
     }
 
-    handleKeyPress(e, edit) {
+    handleKeyPress(e, edit, value) {
         if (e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
             })
+            if(e.target.name === "boardImage") {
+                axios.put(`/api/board-image/${this.props.match.params.boardid}`, {image: value})
+            }
+            else if(e.target.name === "boardName") {
+                axios.put(`/api/board-name/${this.props.match.params.boardid}`, {name: value})
+            }
+            else if(e.target.name === "boardType") {
+                axios.put(`/api/board-type/${this.props.match.params.boardid}`, {type: value})
+            }
         }
     }
 
@@ -75,6 +84,7 @@ class Board extends Component {
             boardType: e.target.value,
             editingType: false
         })
+        axios.put(`/api/board-type/${this.props.match.params.boardid}`, {type: e.target.value})
     }
 
     render() {
@@ -95,7 +105,7 @@ class Board extends Component {
                                 name="boardImage"
                                 value={this.state.boardImage}
                                 onChange={this.updateInput}
-                                onKeyPress={(e) => this.handleKeyPress(e, "editingImage")} />
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingImage", this.state.boardImage)} />
                             :
                             <img src={this.state.boardImage}
                                 alt="board"
@@ -109,7 +119,7 @@ class Board extends Component {
                             name="boardName"
                             value={this.state.boardName}
                             onChange={this.updateInput} 
-                            onKeyPress={(e) => this.handleKeyPress(e, "editingName")}/>
+                            onKeyPress={(e) => this.handleKeyPress(e, "editingName", this.state.boardName)}/>
                             :
                             <button
                             name="editingName"

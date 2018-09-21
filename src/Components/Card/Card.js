@@ -35,11 +35,12 @@ class Card extends Component {
         })
     }
 
-    handleKeyPress(e, edit) {
+    handleKeyPress(e, edit, value) {
         if(e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
             })
+            axios.put(`/api/card-name/${this.props.card.card_id}`, {name: value})
         }
     }
 
@@ -60,7 +61,7 @@ class Card extends Component {
                         name="cardName"
                         value={this.state.cardName}
                         onChange={this.updateInput}
-                        onKeyPress={(e) => this.handleKeyPress(e, "editingCard")}/>
+                        onKeyPress={(e) => this.handleKeyPress(e, "editingCard", this.state.cardName)}/>
                     :
                         <button
                         name="editingCard"

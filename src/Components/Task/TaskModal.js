@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import axios from "axios"
 
 class TaskModal extends Component {
     constructor(props) {
@@ -26,11 +27,17 @@ class TaskModal extends Component {
         })
     }
 
-    handleKeyPress(e, edit) {
+    handleKeyPress(e, edit, value) {
         if(e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
             })
+            if(e.target.name === "name") {
+                axios.put(`/api/task-name/${this.props.task.task_id}`, {name: value})
+            }
+            else if(e.target.name === "details") {
+                axios.put(`/api/task-details/${this.props.task.task_id}`, {details: value})
+            }
         }
     }
 
@@ -46,7 +53,7 @@ class TaskModal extends Component {
                                 name="name"
                                 value={this.state.name}
                                 onChange={this.updateInput}
-                                onKeyPress={(e) => this.handleKeyPress(e, "editingName")} />
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingName", this.state.name)} />
                             :
                             <button
                                 name="editingName"
@@ -60,7 +67,7 @@ class TaskModal extends Component {
                                 name="details"
                                 value={this.state.details}
                                 onChange={this.updateInput}
-                                onKeyPress={(e) => this.handleKeyPress(e, "editingDetails")} />
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingDetails", this.state.details)} />
                             :
                             <button
                                 name="editingDetails"
