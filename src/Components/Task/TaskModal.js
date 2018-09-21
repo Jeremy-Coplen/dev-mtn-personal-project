@@ -15,20 +15,18 @@ class TaskModal extends Component {
     }
 
     updateEditing(e) {
-        console.log(e.target.name, e.target.value)
         this.setState({
             [e.target.name]: true
         })
     }
 
-    updateInput(e, editName) {
+    updateInput(e) {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
 
     handleKeyPress(e, edit) {
-        console.log(e.key, edit)
         if(e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
@@ -37,7 +35,6 @@ class TaskModal extends Component {
     }
 
     render() {
-        console.log("edit name", this.state.editingName, "edit details", this.state.editingDetails)
         const showHideClassName = this.props.show ? "task_display" : "task_display_none"
         return (
             <div className={showHideClassName}>

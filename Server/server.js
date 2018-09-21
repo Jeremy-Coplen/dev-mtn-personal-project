@@ -39,6 +39,10 @@ app.get("/logout", c.logout)
 app.get("/api/user-boards", c.getUserBoards)
 app.get("/api/board-cards/:userid/:boardid", c.getBoardInfo)
 app.get("/api/tasks/:cardid", c.getTaskInfo)
+app.put("/api/board/:boardid")
+app.put("/api/card/:cardid")
+app.put("/api/task-name/:taskid")
+app.put("/api/task-details/:taskid")
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db)

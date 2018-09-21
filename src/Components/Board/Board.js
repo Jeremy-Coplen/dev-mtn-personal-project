@@ -11,9 +11,17 @@ class Board extends Component {
         super(props)
 
         this.state = {
-            boardInfo: {},
-            cardInfo: []
+            cardInfo: [],
+            boardImage: "",
+            boardName: "",
+            boardType: "",
+            editingImage: false,
+            editingName: false,
+            editingType: false
         }
+        this.updateEditing = this.updateEditing.bind(this)
+        this.updateInput = this.updateInput.bind(this)
+        this.handleSelection = this.handleSelection.bind(this)
     }
 
 
@@ -31,35 +39,96 @@ class Board extends Component {
         try {
             let boardRes = await axios.get(`/api/board-cards/${this.props.user.user_id}/${this.props.match.params.boardid}`)
             this.setState({
-                boardInfo: boardRes.data[0],
-                cardInfo: boardRes.data[1]
+                cardInfo: boardRes.data[1],
+                boardImage: boardRes.data[0].board_image,
+                boardName: boardRes.data[0].board_name,
+                boardType: boardRes.data[0].board_type
             })
         } catch (err) {
             console.log(err)
         }
     }
 
+    updateEditing(e) {
+
+        this.setState({
+            [e.target.name]: true
+        })
+    }
+
+    updateInput(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    handleKeyPress(e, edit) {
+        if (e.key === "Enter" && this.state[e.target.name].length > 0) {
+            this.setState({
+                [edit]: false
+            })
+        }
+    }
+
+    handleSelection(e) {
+        this.setState({
+            boardType: e.target.value,
+            editingType: false
+        })
+    }
+
     render() {
-        if(this.state.cardInfo) {
-          var card = this.state.cardInfo.map((card, i) => {
+        console.log(this.state.editingName, this.state.editingType)
+        if (this.state.cardInfo) {
+            var card = this.state.cardInfo.map((card, i) => {
                 return (
-                    <Card key={i} card={card}/>
+                    <Card key={i} card={card} />
                 )
             })
         }
         return (
             <div>
-                {
-                    this.state.boardInfo
-                        ?
-                        <div>
-                            <img src={this.state.boardInfo.board_image} alt="board" />
-                            <h1>{this.state.boardInfo.board_name}</h1>
-                            <h1>{this.state.boardInfo.board_type}</h1>
-                        </div>
-                        :
-                        null
-                }
+                <div>
+                    {
+                        this.state.editingImage
+                            ?
+                            <input type="text"
+                                name="boardImage"
+                                value={this.state.boardImage}
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingImage")} />
+                            :
+                            <img src={this.state.boardImage}
+                                alt="board"
+                                name="editingImage"
+                                onClick={this.updateEditing} />
+                    }
+                    {
+                        this.state.editingName
+                            ?
+                            <input type="text" 
+                            name="boardName"
+                            value={this.state.boardName}
+                            onChange={this.updateInput} 
+                            onKeyPress={(e) => this.handleKeyPress(e, "editingName")}/>
+                            :
+                            <button
+                            name="editingName"
+                            onClick={this.updateEditing}>{this.state.boardName}</button>
+                    }
+                    {
+                        this.state.editingType
+                            ?
+                            <select value={this.state.boardType} onChange={this.handleSelection} >
+                                <option value="Personal">Personal</option>
+                                <option value="Team">Team</option>
+                            </select>
+                            :
+                            <button
+                            name="editingType"
+                            onClick={this.updateEditing}>{this.state.boardType}</button>
+                    }
+                </div>
                 {card}
                 <button>Add Card</button>
             </div>
