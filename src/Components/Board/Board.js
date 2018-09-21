@@ -15,9 +15,11 @@ class Board extends Component {
             boardImage: "",
             boardName: "",
             boardType: "",
+            cardName: "",
             editingImage: false,
             editingName: false,
-            editingType: false
+            editingType: false,
+            addingCard: false
         }
         this.updateEditing = this.updateEditing.bind(this)
         this.updateInput = this.updateInput.bind(this)
@@ -62,7 +64,7 @@ class Board extends Component {
         })
     }
 
-    handleKeyPress(e, edit, value) {
+    async handleKeyPress(e, edit, value) {
         if (e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
@@ -73,8 +75,11 @@ class Board extends Component {
             else if(e.target.name === "boardName") {
                 axios.put(`/api/board-name/${this.props.match.params.boardid}`, {name: value})
             }
-            else if(e.target.name === "boardType") {
-                axios.put(`/api/board-type/${this.props.match.params.boardid}`, {type: value})
+            else if(e.target.name === "cardName") {
+               let newCard = await axios.post("/api/card", {boardId: this.props.match.params.boardid, name: value})
+               this.setState({
+                   cardInfo: [...this.state.cardInfo, newCard.data]
+               })
             }
         }
     }
@@ -88,6 +93,7 @@ class Board extends Component {
     }
 
     render() {
+        console.log(this.state.cardInfo)
         if (this.state.cardInfo) {
             var card = this.state.cardInfo.map((card, i) => {
                 return (
@@ -128,9 +134,9 @@ class Board extends Component {
                     {
                         this.state.editingType
                             ?
-                            <select value={this.state.boardType} onChange={this.handleSelection} >
-                                <option value="Personal">Personal</option>
-                                <option value="Team">Team</option>
+                            <select defaultValue={this.state.boardType} onChange={this.handleSelection} >
+                                <option value={this.state.boardType === "Personal" ? "Personal" : "Team"} disabled hidden>{this.state.boardType}</option>
+                                <option value={this.state.boardType === "Personal" ? "Team" : "Personal"}>{this.state.boardType === "Personal" ? "Team" : "Personal"}</option>
                             </select>
                             :
                             <button
@@ -139,7 +145,20 @@ class Board extends Component {
                     }
                 </div>
                 {card}
-                <button>Add Card</button>
+                {
+                    this.state.addingCard
+                    ?
+                        <input type="text"
+                        placeholder="Enter Card Name"
+                        name="cardName"
+                        value={this.state.cardName}
+                        onChange={this.updateInput}
+                        onKeyPress={(e) => this.handleKeyPress(e, "addingCard", this.state.cardName)}/>
+                    :
+                        <button
+                        name="addingCard"
+                        onClick={this.updateEditing}>Add Card</button>
+                }
             </div>
         )
     }

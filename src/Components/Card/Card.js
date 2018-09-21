@@ -10,10 +10,12 @@ class Card extends Component {
         this.state = {
             cardName: this.props.card.card_name,
             tasks: [],
-            editingCard: false
+            editingCard: false,
+            show: false
         }
         this.updateEditing = this.updateEditing.bind(this)
         this.updateInput = this.updateInput.bind(this)
+        this.closeModal = this.closeModal.bind(this)
     }
 
     async componentDidMount() {
@@ -44,6 +46,18 @@ class Card extends Component {
         }
     }
 
+    openModal() {
+        this.setState({
+            show: true
+        })
+    }
+
+    closeModal() {
+        this.setState({
+            show: false
+        })
+    }
+
     render() {
         if(this.state.tasks) {
             var task = this.state.tasks.map((task, i) => {
@@ -69,7 +83,7 @@ class Card extends Component {
 
                 }
                 {task}
-                <button>Add Task</button>
+                <button>>Add Task</button>
             </div>
         )
     }

@@ -1,0 +1,18 @@
+@import "../mixins";
+@import "../variables";
+
+.board_display {
+    background: $medium_opacity;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    div {
+        background: $light;
+    }
+}
+
+.board_display_none {
+    display: none;
+}

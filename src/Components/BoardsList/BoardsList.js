@@ -5,13 +5,27 @@ import { Link } from "react-router-dom"
 import { connect } from "react-redux"
 import { getUserData } from "../../Ducks/reducer"
 
+import BoardModal from "./BoardModal"
+
 class BoardsList extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            boards: [],
+            show: false
+        }
+        this.closeBoard = this.closeBoard.bind(this)
+    }
+
     async componentDidMount(){
         try {
             let userRes = await axios.get("/api/user-data")
             this.props.getUserData(userRes.data)
             let boardsRes = await axios.get("/api/user-boards")
-            this.props.getUserData(boardsRes.data)
+            this.setState({
+                boards: boardsRes.data
+            })
         }catch(err) {
             if(err.response.status === 401) {
                 alert("Go Login")
@@ -20,21 +34,30 @@ class BoardsList extends Component {
         }
     }
 
+    AddBoard() {
+        this.setState({
+            show: true
+        })
+    }
+
+    closeBoard() {
+        this.setState({
+            show: false
+        })
+    }
 
     render() {
-        console.log(this.props.user)
-        const { boards } = this.props.user
         return (
             <div>
                 {
-                    boards
+                    this.state.boards
                     ?
-                        boards.map(board => {
+                        this.state.boards.map(board => {
                             return (
-                                <Link to={`/board/${board.b_id}`} key={board.b_id}>
+                                <Link to={`/board/${board.board_id}`} key={board.board_id}>
                                     <div>
                                         <img src={board.board_image} alt="board"/>
-                                        <h2>{board.name}</h2>
+                                        <h2>{board.board_name}</h2>
                                         <h2>type: {board.board_type}</h2>
                                     </div>
                                 </Link>
@@ -43,6 +66,8 @@ class BoardsList extends Component {
                     :
                         <h1>Loading...</h1>
                 }
+                <button onClick={() => this.AddBoard()}>Add board</button>
+                <BoardModal show={this.state.show} closeBoard={this.closeBoard}/>
             </div>
         )
     }

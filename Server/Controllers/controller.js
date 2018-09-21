@@ -41,6 +41,16 @@ module.exports = {
         res.redirect("/#/dashboard")
     },
 
+    logout: (req, res) => {
+        req.session.destroy()
+        try {
+            res.redirect("http://localhost:3000/#/")
+        }catch(err){
+            console.log(err)
+        }
+        
+    },
+
     getUserData: (req, res) => {
         if(req.session.user) {
             res.status(200).send(req.session.user)
@@ -55,8 +65,7 @@ module.exports = {
 
         try {
             let boardsRes = await db.get_user_boards([req.session.user.user_id])
-            req.session.user.boards = boardsRes
-            res.status(200).send(req.session.user)
+            res.status(200).send(boardsRes)
         }catch(err) {
             console.log(err)
         }
@@ -65,9 +74,8 @@ module.exports = {
     getBoardInfo: async (req, res) => {
         const db = req.app.get("db")
         const results = []
-
         try {
-            let boardRes = await db.get_one_board([Number(req.params.userid), Number(req.params.boardid)])
+            let boardRes = await db.get_one_board([Number(req.params.boardid), Number(req.params.userid)])
             results.push(boardRes[0])
             let cardsRes = await db.get_board_cards([Number(req.params.boardid)])
             results.push(cardsRes)
@@ -158,13 +166,28 @@ module.exports = {
         .catch(err => console.log(err))
     },
 
-    logout: (req, res) => {
-        req.session.destroy()
-        try {
-            res.redirect("http://localhost:3000/#/")
-        }catch(err){
+    createBoard: async (req, res) => {
+        const db = req.app.get("db")
+        const { name, type, userId, image } = req.body
+
+        try{
+            let boardId = await db.create_board([name, type, userId, image])
+            res.status(200).send(boardId[0].board_id.toString())
+        }catch(err) {
             console.log(err)
         }
-        
+    },
+
+    createCard: async (req, res) => {
+        const db = req.app.get("db")
+        const {boardId, name} = req.body
+
+        try{
+            let card = await db.create_card([boardId, name])
+            console.log(card[0])
+            res.status(200).send(card[0])
+        }catch(err) {
+            console.log(err)
+        }
     }
 }

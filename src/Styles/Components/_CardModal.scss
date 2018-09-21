@@ -1,0 +1,18 @@
+@import "../mixins";
+@import "../variables";
+
+.card_display {
+    background: $medium_opacity;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    div {
+        background: $light;
+    }
+}
+
+.card_display_none {
+    display: none
+}
