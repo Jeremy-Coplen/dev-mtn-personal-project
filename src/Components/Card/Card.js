@@ -8,9 +8,11 @@ class Card extends Component {
         super(props)
 
         this.state = {
+            taskName: "",
             cardName: this.props.card.card_name,
             tasks: [],
             editingCard: false,
+            addingTask: false,
             show: false
         }
         this.updateEditing = this.updateEditing.bind(this)
@@ -37,12 +39,20 @@ class Card extends Component {
         })
     }
 
-    handleKeyPress(e, edit, value) {
+    async handleKeyPress(e, edit, value) {
         if(e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
             })
-            axios.put(`/api/card-name/${this.props.card.card_id}`, {name: value})
+            if(e.target.name === "cardName") {
+                axios.put(`/api/card-name/${this.props.card.card_id}`, {name: value})
+            }
+            else if(e.target.name === "taskName") {
+               let newTask = await axios.post("/api/task", {name: value, cardId: this.props.card.card_id})
+               this.setState({
+                   tasks: [...this.state.tasks, newTask.data]
+               })
+            }
         }
     }
 
@@ -83,7 +93,20 @@ class Card extends Component {
 
                 }
                 {task}
-                <button>>Add Task</button>
+                {
+                    this.state.addingTask
+                    ?
+                            <input type="text"
+                            placeholder="Enter Task Title"
+                            name="taskName"
+                            value={this.state.taskName}
+                            onChange={this.updateInput}
+                            onKeyPress={(e) => this.handleKeyPress(e, "addingTask", this.state.taskName)}/> 
+                    :
+                        <button
+                        name="addingTask"
+                        onClick={this.updateEditing}>Add Task</button>
+                }
             </div>
         )
     }

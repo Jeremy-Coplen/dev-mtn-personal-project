@@ -96,6 +96,42 @@ module.exports = {
         }
     },
 
+    createBoard: async (req, res) => {
+        const db = req.app.get("db")
+        const { name, type, userId, image } = req.body
+
+        try{
+            let boardId = await db.create_board([name, type, userId, image])
+            res.status(200).send(boardId[0].board_id.toString())
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    createCard: async (req, res) => {
+        const db = req.app.get("db")
+        const {boardId, name} = req.body
+
+        try{
+            let card = await db.create_card([boardId, name])
+            res.status(200).send(card[0])
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    createTask: async (req, res) => {
+        const db = req.app.get("db")
+        const { name, cardId } = req.body
+
+        try{
+            let task = await db.create_task([name, cardId, `${name} Details`])
+            res.status(200).send(task[0])
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
     updateBoardImage: (req, res) => {
         const db = req.app.get("db")
 
@@ -164,30 +200,5 @@ module.exports = {
             res.sendStatus(200)
         })
         .catch(err => console.log(err))
-    },
-
-    createBoard: async (req, res) => {
-        const db = req.app.get("db")
-        const { name, type, userId, image } = req.body
-
-        try{
-            let boardId = await db.create_board([name, type, userId, image])
-            res.status(200).send(boardId[0].board_id.toString())
-        }catch(err) {
-            console.log(err)
-        }
-    },
-
-    createCard: async (req, res) => {
-        const db = req.app.get("db")
-        const {boardId, name} = req.body
-
-        try{
-            let card = await db.create_card([boardId, name])
-            console.log(card[0])
-            res.status(200).send(card[0])
-        }catch(err) {
-            console.log(err)
-        }
     }
 }
