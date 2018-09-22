@@ -98,10 +98,11 @@ module.exports = {
 
     createBoard: async (req, res) => {
         const db = req.app.get("db")
-        const { name, type, userId, image } = req.body
+        const { name, type, userId, image, defaultCards } = req.body
 
         try{
             let boardId = await db.create_board([name, type, userId, image])
+            db.create_default_cards([boardId[0].board_id, defaultCards[0], boardId[0].board_id, defaultCards[1], boardId[0].board_id, defaultCards[2]])
             res.status(200).send(boardId[0].board_id.toString())
         }catch(err) {
             console.log(err)

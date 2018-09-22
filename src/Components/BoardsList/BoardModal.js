@@ -30,6 +30,7 @@ class BoardModal extends Component {
     }
 
   async createBoard(name, type, userId, image) {
+      const defaultCards = ["To Do Eventually", "To Do Today", "Done"]
         if(!image) {
             image = "https://rajshankar.files.wordpress.com/2013/07/to-do-list1.png"
         }
@@ -40,7 +41,7 @@ class BoardModal extends Component {
             name = "Board Name"
         }
         try{
-            let boardId = await axios.post("/api/board", {name, type, userId, image})
+            let boardId = await axios.post("/api/board", { name, type, userId, image, defaultCards })
             this.props.history.push(`/board/${boardId.data}`)
         }catch(err) {
             console.log(err)
