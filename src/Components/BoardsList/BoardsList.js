@@ -1,11 +1,11 @@
 import React, { Component } from "react"
 import axios from "axios"
-import { Link } from "react-router-dom"
 
 import { connect } from "react-redux"
 import { getUserData } from "../../Ducks/reducer"
 
 import BoardModal from "./BoardModal"
+import Board from "../Board/Board"
 
 class BoardsList extends Component {
     constructor(props) {
@@ -16,6 +16,7 @@ class BoardsList extends Component {
             show: false
         }
         this.closeBoard = this.closeBoard.bind(this)
+        this.deleteBoard = this.deleteBoard.bind(this)
     }
 
     async componentDidMount(){
@@ -46,26 +47,25 @@ class BoardsList extends Component {
         })
     }
 
+    async deleteBoard(boardId) {
+        let boardRes = await axios.delete(`/api/board/${boardId}`)
+        console.log(boardRes.data)
+        this.setState({
+            boards: boardRes.data
+        })
+    }
+
     render() {
+        if(this.state.boards) {
+            var board = this.state.boards.map(board => {
+                return (
+                    <Board key={board.board_id} board={board} deleteBoard={this.deleteBoard} />
+                )
+            })
+        }
         return (
             <div>
-                {
-                    this.state.boards
-                    ?
-                        this.state.boards.map(board => {
-                            return (
-                                <Link to={`/board/${board.board_id}`} key={board.board_id}>
-                                    <div>
-                                        <img src={board.board_image} alt="board"/>
-                                        <h2>{board.board_name}</h2>
-                                        <h2>type: {board.board_type}</h2>
-                                    </div>
-                                </Link>
-                            )
-                        })
-                    :
-                        <h1>Loading...</h1>
-                }
+                {board}
                 <button onClick={() => this.AddBoard()}>Add board</button>
                 <BoardModal show={this.state.show} closeBoard={this.closeBoard}/>
             </div>

@@ -48,7 +48,7 @@ class Card extends Component {
                 axios.put(`/api/card-name/${this.props.card.card_id}`, {name: value})
             }
             else if(e.target.name === "taskName") {
-               let newTask = await axios.post("/api/task", {name: value, cardId: this.props.card.card_id})
+               let newTask = await axios.post("/api/task", { name: value, cardId: this.props.card.card_id, boardId: this.props.card.board_id})
                this.setState({
                    tasks: [...this.state.tasks, newTask.data]
                })

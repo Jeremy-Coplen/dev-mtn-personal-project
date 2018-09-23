@@ -49,6 +49,7 @@ app.put("/api/card-name/:cardid", c.updateCardName)
 app.put("/api/task-name/:taskid", c.updateTaskName)
 app.put("/api/task-details/:taskid", c.updateTaskDetails)
 app.put("/api/task-archived/:taskid", c.updateTaskArchived)
+app.delete("/api/board/:boardid", c.deleteBoard)
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db)

@@ -123,10 +123,10 @@ module.exports = {
 
     createTask: async (req, res) => {
         const db = req.app.get("db")
-        const { name, cardId } = req.body
+        const { name, cardId, boardId } = req.body
 
         try{
-            let task = await db.create_task([name, cardId, `${name} Details`])
+            let task = await db.create_task([name, cardId, `${name} Details`, boardId])
             res.status(200).send(task[0])
         }catch(err) {
             console.log(err)
@@ -201,5 +201,19 @@ module.exports = {
             res.sendStatus(200)
         })
         .catch(err => console.log(err))
+    },
+
+    deleteBoard: async (req, res) => {
+        const db = req.app.get("db")
+
+        db.delete_board([Number(req.params.boardid)])
+        .catch(err => console.log(err))
+
+        try {
+            let boardsRes = await db.get_user_boards([req.session.user.user_id])
+            res.status(200).send(boardsRes)
+        }catch(err) {
+            console.log(err)
+        }
     }
 }
