@@ -75,7 +75,7 @@ module.exports = {
         const db = req.app.get("db")
         const results = []
         try {
-            let boardRes = await db.get_one_board([Number(req.params.boardid), Number(req.params.userid)])
+            let boardRes = await db.get_one_board([Number(req.params.boardid), req.session.user.user_id])
             results.push(boardRes[0])
             let cardsRes = await db.get_board_cards([Number(req.params.boardid)])
             results.push(cardsRes)
@@ -103,6 +103,7 @@ module.exports = {
         try{
             let boardId = await db.create_board([name, type, userId, image])
             db.create_default_cards([boardId[0].board_id, defaultCards[0], boardId[0].board_id, defaultCards[1], boardId[0].board_id, defaultCards[2]])
+            db.add_to_boards_users([boardId[0].board_id, userId])
             res.status(200).send(boardId[0].board_id.toString())
         }catch(err) {
             console.log(err)
@@ -135,8 +136,9 @@ module.exports = {
 
     updateBoardImage: (req, res) => {
         const db = req.app.get("db")
+        const { image, boardId } = req.body
 
-        db.update_board_image([req.body.image, Number(req.params.boardid)])
+        db.update_board_image([image, boardId])
         .then(() => {
             res.sendStatus(200)
         })
@@ -145,8 +147,9 @@ module.exports = {
 
     updateBoardName: (req, res) => {
         const db = req.app.get("db")
+        const { name, boardId } = req.body
 
-        db.update_board_name([req.body.name, Number(req.params.boardid)])
+        db.update_board_name([name, boardId])
         .then(() => {
             res.sendStatus(200)
         })
@@ -155,8 +158,9 @@ module.exports = {
 
     updateBoardType: (req, res) => {
         const db = req.app.get("db")
+        const { type, boardId } = req.body
 
-        db.update_board_type([req.body.type, Number(req.params.boardid)])
+        db.update_board_type([type, boardId])
         .then(() => {
             res.sendStatus(200)
         })
@@ -165,8 +169,9 @@ module.exports = {
 
     updateCardName: (req, res) => {
         const db = req.app.get("db")
+        const { name, cardId } = req.body
 
-        db.update_card_name([req.body.name, Number(req.params.cardid)])
+        db.update_card_name([name, cardId])
         .then(() => {
             res.sendStatus(200)
         })
@@ -175,8 +180,9 @@ module.exports = {
 
     updateTaskName: (req, res) => {
         const db = req.app.get("db")
+        const { name, taskId } = req.body
 
-        db.update_task_name([req.body.name, Number(req.params.taskid)])
+        db.update_task_name([name, taskId])
         .then(() => {
             res.sendStatus(200)
         })
@@ -185,22 +191,53 @@ module.exports = {
 
     updateTaskDetails: (req, res) => {
         const db = req.app.get("db")
+        const { details, taskId } = req.body
 
-        db.update_task_details([req.body.details, Number(req.params.taskid)])
+        db.update_task_details([details, taskId])
         .then(() => {
             res.sendStatus(200)
         })
         .catch(err => console.log(err))
     },
 
-    updateTaskArchived: (req, res) => {
+    updateBoardArchived: async (req, res) => {
         const db = req.app.get("db")
+        const { archived, boardId } = req.body
+
+        try{
+            db.update_board_archived([archived, boardId])
+            let boardsRes = await db.get_user_boards([req.sessions.user.user_id])
+            res.status(200).send(boardsRes)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    updateCardArchived: async (req, res) => {
+        const db = req.app.get("db")
+        const { archived, cardId, boardId } = req.body
+
+        try{
+            db.update_card_archived([archived, cardId])
+            let cardsRes = await db.get_board_cards([boardId])
+            res.status(200).send(cardsRes)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    updateTaskArchived: async (req, res) => {
+        const db = req.app.get("db")
+        const { archived, taskId, cardId } = req.body
         
-        db.update_task_archived([req.body.archived, Number(req.params.taskid)])
-        .then(() => {
-            res.sendStatus(200)
-        })
-        .catch(err => console.log(err))
+        try{
+            db.update_task_archived([archived, taskId])
+            let tasksRes = await db.get_card_tasks([cardId])
+            res.status(200).send(tasksRes)
+        }catch(err) {
+            console.log(err)
+        }
+        
     },
 
     deleteBoard: async (req, res) => {

@@ -39,7 +39,7 @@ class SingleBoard extends Component {
         }
 
         try {
-            let boardRes = await axios.get(`/api/board-cards/${this.props.user.user_id}/${this.props.match.params.boardid}`)
+            let boardRes = await axios.get(`/api/board-cards/${this.props.match.params.boardid}`)
             this.setState({
                 cardInfo: boardRes.data[1],
                 boardImage: boardRes.data[0].board_image,
@@ -70,13 +70,13 @@ class SingleBoard extends Component {
                 [edit]: false
             })
             if(e.target.name === "boardImage") {
-                axios.put(`/api/board-image/${this.props.match.params.boardid}`, {image: value})
+                axios.put(`/api/board-image}`, {image: value, boardId: this.props.match.params.boardid})
             }
             else if(e.target.name === "boardName") {
-                axios.put(`/api/board-name/${this.props.match.params.boardid}`, {name: value})
+                axios.put(`/api/board-name`, {name: value, boardId: this.props.match.params.boardid})
             }
             else if(e.target.name === "cardName") {
-               let newCard = await axios.post("/api/card", {boardId: this.props.match.params.boardid, name: value})
+               let newCard = await axios.post("/api/card", {name: value, boardId: this.props.match.params.boardid})
                this.setState({
                    cardInfo: [...this.state.cardInfo, newCard.data]
                })
@@ -89,14 +89,14 @@ class SingleBoard extends Component {
             boardType: e.target.value,
             editingType: false
         })
-        axios.put(`/api/board-type/${this.props.match.params.boardid}`, {type: e.target.value})
+        axios.put(`/api/board-type`, {type: e.target.value, boardId: this.props.match.params.boardid})
     }
 
     render() {
         if (this.state.cardInfo) {
             var card = this.state.cardInfo.map((card, i) => {
                 return (
-                    <Card key={i} card={card} />
+                    <Card key={i} card={card} boardId={this.props.match.params.boardid}/>
                 )
             })
         }

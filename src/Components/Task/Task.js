@@ -8,9 +8,11 @@ class Task extends Component {
 
         this.state = {
             task: this.props.task,
+            taskName: this.props.task.task_name,
             show: false
         }
         this.closeTask = this.closeTask.bind(this)
+        this.updateTaskName = this.updateTaskName.bind(this)
     }
 
     openTask() {
@@ -25,11 +27,17 @@ class Task extends Component {
         })
     }
 
+    updateTaskName(val) {
+        this.setState({
+            taskName: val
+        })
+    }
+
     render() {
         return (
             <div>
-                <h1 onClick={() => this.openTask()}>{this.state.task.task_name}</h1>
-                <TaskModal task={this.props.task} closeTask={this.closeTask} show={this.state.show}/>
+                <h1 onClick={() => this.openTask()}>{this.state.taskName}</h1>
+                <TaskModal task={this.props.task} closeTask={this.closeTask} show={this.state.show} updateTaskName={this.updateTaskName}/>
             </div>
                 )
             }

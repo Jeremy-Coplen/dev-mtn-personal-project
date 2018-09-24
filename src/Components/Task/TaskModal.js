@@ -33,10 +33,11 @@ class TaskModal extends Component {
                 [edit]: false
             })
             if(e.target.name === "name") {
-                axios.put(`/api/task-name/${this.props.task.task_id}`, {name: value})
+                axios.put(`/api/task-name`, {name: value, taskId: this.props.task.task_id})
+                this.props.updateTaskName(value)
             }
             else if(e.target.name === "details") {
-                axios.put(`/api/task-details/${this.props.task.task_id}`, {details: value})
+                axios.put(`/api/task-details`, {details: value, taskId: this.props.task.task_id})
             }
         }
     }
