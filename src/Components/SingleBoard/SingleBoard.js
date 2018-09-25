@@ -27,6 +27,8 @@ class SingleBoard extends Component {
         this.updateInput = this.updateInput.bind(this)
         this.handleSelection = this.handleSelection.bind(this)
         this.updateShow = this.updateShow.bind(this)
+        this.recycleCard = this.recycleCard.bind(this)
+        this.restoreCard = this.recycleCard.bind(this)
     }
 
 
@@ -68,22 +70,26 @@ class SingleBoard extends Component {
     }
 
     async handleKeyPress(e, edit, value) {
-        if (e.key === "Enter" && this.state[e.target.name].length > 0) {
-            this.setState({
-                [edit]: false
-            })
-            if (e.target.name === "boardImage") {
-                axios.put(`/api/board-image}`, { image: value, boardId: this.props.match.params.boardid })
-            }
-            else if (e.target.name === "boardName") {
-                axios.put(`/api/board-name`, { name: value, boardId: this.props.match.params.boardid })
-            }
-            else if (e.target.name === "cardName") {
-                let newCard = await axios.post("/api/card", { name: value, boardId: this.props.match.params.boardid })
+        try{
+            if (e.key === "Enter" && this.state[e.target.name].length > 0) {
                 this.setState({
-                    cardInfo: [...this.state.cardInfo, newCard.data]
+                    [edit]: false
                 })
+                if (e.target.name === "boardImage") {
+                    axios.put(`/api/board-image}`, { image: value, boardId: this.props.match.params.boardid })
+                }
+                else if (e.target.name === "boardName") {
+                    axios.put(`/api/board-name`, { name: value, boardId: this.props.match.params.boardid })
+                }
+                else if (e.target.name === "cardName") {
+                    let newCard = await axios.post("/api/card", { name: value, boardId: this.props.match.params.boardid })
+                    this.setState({
+                        cardInfo: [...this.state.cardInfo, newCard.data]
+                    })
+                }
             }
+        }catch(err) {
+            console.log(err)
         }
     }
 
@@ -101,11 +107,34 @@ class SingleBoard extends Component {
         })
     }
 
+    async recycleCard(cardId) {
+        try{
+            let cardsRes = await axios.put("/api/card-archived", { archived: true, cardId, boardId: this.props.match.params.boardid, type: false})
+            this.setState({
+                cardInfo: cardsRes.data
+            })
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
+    async restoreCard() {
+        try{
+            let cardsRes = await axios.get(`/api/board-cards/${this.props.match.params.boardid}`)
+            this.setState({
+                cardInfo: cardsRes.data[1]
+            })
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
+
     render() {
         if (this.state.cardInfo) {
-            var card = this.state.cardInfo.map((card, i) => {
+            var card = this.state.cardInfo.map(card => {
                 return (
-                    <Card key={i} card={card} boardId={this.props.match.params.boardid} />
+                    <Card key={card.card_id} card={card} boardId={this.props.match.params.boardid} recycleCard={this.recycleCard} />
                 )
             })
         }
@@ -168,7 +197,7 @@ class SingleBoard extends Component {
                             name="addingCard"
                             onClick={this.updateEditing}>Add Card</button>
                 }
-                <CardsTasksRecyclingBinModal show={this.state.show} updateShow={this.updateShow} />
+                <CardsTasksRecyclingBinModal show={this.state.show} updateShow={this.updateShow} restoreCard={this.restoreCard} />
             </div>
         )
     }

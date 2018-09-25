@@ -97,7 +97,7 @@ module.exports = {
         const db = req.app.get("db")
 
         try{
-            let tasksRes = await db.get_card_tasks([Number(req.params.cardid), true])
+            let tasksRes = await db.get_archived_tasks([Number(req.params.boardid)])
             res.status(200).send(tasksRes)
         }catch(err) {
             console.log(err)
@@ -248,11 +248,11 @@ module.exports = {
 
     updateCardArchived: async (req, res) => {
         const db = req.app.get("db")
-        const { archived, cardId, boardId } = req.body
+        const { archived, cardId, boardId, type } = req.body
 
         try{
-            db.update_card_archived([archived, cardId])
-            let cardsRes = await db.get_board_cards([boardId])
+            await db.update_card_archived([archived, cardId])
+            let cardsRes = await db.get_board_cards([boardId, type])
             res.status(200).send(cardsRes)
         }catch(err) {
             console.log(err)
@@ -261,11 +261,11 @@ module.exports = {
 
     updateTaskArchived: async (req, res) => {
         const db = req.app.get("db")
-        const { archived, taskId, cardId } = req.body
+        const { archived, taskId, cardId, type } = req.body
         
         try{
             db.update_task_archived([archived, taskId])
-            let tasksRes = await db.get_card_tasks([cardId])
+            let tasksRes = await db.get_card_tasks([cardId, type])
             res.status(200).send(tasksRes)
         }catch(err) {
             console.log(err)

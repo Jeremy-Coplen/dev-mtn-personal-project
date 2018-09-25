@@ -14,6 +14,19 @@ class BoardsRecyclingBinModal extends Component {
     }
 
     async componentDidMount() {
+        console.log(this.props)
+        try {
+            let boardsRes = await axios.get("/api/user-archived-boards")
+            this.setState({
+                archivedBoards: boardsRes.data
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    async componentDidUpdate(prevprops) {
+        if(prevprops.show !== this.props.show) {
             try {
                 let boardsRes = await axios.get("/api/user-archived-boards")
                 this.setState({
@@ -22,6 +35,7 @@ class BoardsRecyclingBinModal extends Component {
             } catch (err) {
                 console.log(err)
             }
+        }
     }
 
     async restoreBoard(boardId) {

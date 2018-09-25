@@ -37,6 +37,7 @@ class Task extends Component {
         return (
             <div>
                 <h1 onClick={() => this.openTask()}>{this.state.taskName}</h1>
+                <button onClick={() => this.props.recycleTask(this.state.task.task_id)}>Recycle</button>
                 <TaskModal task={this.props.task} closeTask={this.closeTask} show={this.state.show} updateTaskName={this.updateTaskName}/>
             </div>
                 )

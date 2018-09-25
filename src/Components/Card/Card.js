@@ -12,18 +12,17 @@ class Card extends Component {
             cardName: this.props.card.card_name,
             tasks: [],
             editingCard: false,
-            addingTask: false,
-            show: false
+            addingTask: false
         }
         this.updateEditing = this.updateEditing.bind(this)
         this.updateInput = this.updateInput.bind(this)
-        this.closeModal = this.closeModal.bind(this)
+        this.recycleTask = this.recycleTask.bind(this)
     }
 
     async componentDidMount() {
-        let taskRes = await axios.get(`/api/tasks/${this.props.card.card_id}`)
+        let tasksRes = await axios.get(`/api/tasks/${this.props.card.card_id}`)
         this.setState({
-            tasks: taskRes.data
+            tasks: tasksRes.data
         })
     }
 
@@ -59,23 +58,29 @@ class Card extends Component {
         }
     }
 
-    openModal() {
-        this.setState({
-            show: true
-        })
+    async recycleTask(taskId) {
+        try {
+            let tasksRes = await axios.put("/api/task-archived", { archived: true, taskId, cardId: this.props.card.card_id, type: false})
+            this.setState({
+                tasks: tasksRes.data
+            })
+        }catch(err) {
+            console.log(err)
+        }
     }
 
-    closeModal() {
+    async restoreTask() {
+        let tasksRes = await axios.get(`/api/tasks/${this.props.card.card_id}`)
         this.setState({
-            show: false
+            tasks: tasksRes.data
         })
     }
 
     render() {
         if(this.state.tasks) {
-            var task = this.state.tasks.map((task, i) => {
+            var task = this.state.tasks.map(task => {
                 return (
-                    <Task key={i} task={task}/>
+                    <Task key={task.task_id} task={task} recycleTask={this.recycleTask} />
                 )
             })
         }
@@ -84,17 +89,18 @@ class Card extends Component {
                 {
                     this.state.editingCard
                     ?
-                        <input type="text"
-                        name="cardName"
-                        value={this.state.cardName}
-                        onChange={this.updateInput}
-                        onKeyPress={(e) => this.handleKeyPress(e, "editingCard", this.state.cardName)}/>
+                    <input type="text"
+                    name="cardName"
+                    value={this.state.cardName}
+                    onChange={this.updateInput}
+                    onKeyPress={(e) => this.handleKeyPress(e, "editingCard", this.state.cardName)}/>
                     :
-                        <button
-                        name="editingCard"
-                        onClick={this.updateEditing}>{this.state.cardName}</button>
-
+                    <button
+                    name="editingCard"
+                    onClick={this.updateEditing}>{this.state.cardName}</button>
+                    
                 }
+                <button onClick={() => this.props.recycleCard(this.props.card.card_id)}>Recycle</button>
                 {task}
                 {
                     this.state.addingTask
