@@ -21,7 +21,7 @@ class Board extends Component {
                         <h2>type: {board.board_type}</h2>
                     </div>
                 </Link>
-                <button onClick={() => this.props.deleteBoard(board.board_id)}>X</button>
+                <button onClick={() => this.props.recycleBoard(board.board_id)}>Recycle</button>
             </div>
         )
     }

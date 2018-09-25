@@ -64,8 +64,41 @@ module.exports = {
         const db = req.app.get("db")
 
         try {
-            let boardsRes = await db.get_user_boards([req.session.user.user_id])
+            let boardsRes = await db.get_user_boards([req.session.user.user_id, false])
             res.status(200).send(boardsRes)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    getUserArchivedBoards: async (req, res) => {
+        const db = req.app.get("db")
+
+        try{
+            let boardsRes = await db.get_user_boards([req.session.user.user_id, true])
+            res.status(200).send(boardsRes)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    getArchivedCards: async (req, res) => {
+        const db = req.app.get("db")
+
+        try{
+            let cardsRes = await db.get_board_cards([Number(req.params.boardid), true])
+            res.status(200).send(cardsRes)
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
+    getArchivedTasks: async (req, res) => {
+        const db = req.app.get("db")
+
+        try{
+            let tasksRes = await db.get_card_tasks([Number(req.params.cardid), true])
+            res.status(200).send(tasksRes)
         }catch(err) {
             console.log(err)
         }
@@ -77,7 +110,7 @@ module.exports = {
         try {
             let boardRes = await db.get_one_board([Number(req.params.boardid), req.session.user.user_id])
             results.push(boardRes[0])
-            let cardsRes = await db.get_board_cards([Number(req.params.boardid)])
+            let cardsRes = await db.get_board_cards([Number(req.params.boardid), false])
             results.push(cardsRes)
             res.status(200).send(results)
         }catch(err) {
@@ -89,7 +122,7 @@ module.exports = {
         const db = req.app.get("db")
 
         try{
-            let tasksRes = await db.get_card_tasks([Number(req.params.cardid)])
+            let tasksRes = await db.get_card_tasks([Number(req.params.cardid), false])
             res.status(200).send(tasksRes)
         }catch(err) {
             console.log(err)
@@ -102,8 +135,8 @@ module.exports = {
 
         try{
             let boardId = await db.create_board([name, type, userId, image])
-            db.create_default_cards([boardId[0].board_id, defaultCards[0], boardId[0].board_id, defaultCards[1], boardId[0].board_id, defaultCards[2]])
-            db.add_to_boards_users([boardId[0].board_id, userId])
+            await db.create_default_cards([boardId[0].board_id, defaultCards[0], boardId[0].board_id, defaultCards[1], boardId[0].board_id, defaultCards[2]])
+            await db.add_to_boards_users([boardId[0].board_id, userId])
             res.status(200).send(boardId[0].board_id.toString())
         }catch(err) {
             console.log(err)
@@ -202,11 +235,11 @@ module.exports = {
 
     updateBoardArchived: async (req, res) => {
         const db = req.app.get("db")
-        const { archived, boardId } = req.body
+        const { archived, boardId, type } = req.body
 
         try{
-            db.update_board_archived([archived, boardId])
-            let boardsRes = await db.get_user_boards([req.sessions.user.user_id])
+            await db.update_board_archived([archived, boardId])
+            let boardsRes = await db.get_user_boards([req.session.user.user_id, type])
             res.status(200).send(boardsRes)
         }catch(err) {
             console.log(err)

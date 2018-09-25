@@ -53,7 +53,7 @@ class BoardModal extends Component {
         return (
             <div className={showHideClassName}>
                 <div>
-                    <button onClick={() => this.props.closeBoard()}>Close</button>
+                    <button onClick={() => this.props.updateShow()}>Close</button>
                     <input type="text"
                     placeholder="Enter Board Name"
                     name="name"

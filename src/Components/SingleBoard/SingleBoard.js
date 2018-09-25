@@ -5,6 +5,7 @@ import { connect } from "react-redux"
 import { getUserData } from "../../Ducks/reducer"
 
 import Card from "../Card/Card"
+import CardsTasksRecyclingBinModal from "../CardsTasksRecyclingBinModal/CardsTasksRecyclingBinModal"
 
 class SingleBoard extends Component {
     constructor(props) {
@@ -19,11 +20,13 @@ class SingleBoard extends Component {
             editingImage: false,
             editingName: false,
             editingType: false,
-            addingCard: false
+            addingCard: false,
+            show: false
         }
         this.updateEditing = this.updateEditing.bind(this)
         this.updateInput = this.updateInput.bind(this)
         this.handleSelection = this.handleSelection.bind(this)
+        this.updateShow = this.updateShow.bind(this)
     }
 
 
@@ -69,17 +72,17 @@ class SingleBoard extends Component {
             this.setState({
                 [edit]: false
             })
-            if(e.target.name === "boardImage") {
-                axios.put(`/api/board-image}`, {image: value, boardId: this.props.match.params.boardid})
+            if (e.target.name === "boardImage") {
+                axios.put(`/api/board-image}`, { image: value, boardId: this.props.match.params.boardid })
             }
-            else if(e.target.name === "boardName") {
-                axios.put(`/api/board-name`, {name: value, boardId: this.props.match.params.boardid})
+            else if (e.target.name === "boardName") {
+                axios.put(`/api/board-name`, { name: value, boardId: this.props.match.params.boardid })
             }
-            else if(e.target.name === "cardName") {
-               let newCard = await axios.post("/api/card", {name: value, boardId: this.props.match.params.boardid})
-               this.setState({
-                   cardInfo: [...this.state.cardInfo, newCard.data]
-               })
+            else if (e.target.name === "cardName") {
+                let newCard = await axios.post("/api/card", { name: value, boardId: this.props.match.params.boardid })
+                this.setState({
+                    cardInfo: [...this.state.cardInfo, newCard.data]
+                })
             }
         }
     }
@@ -89,14 +92,20 @@ class SingleBoard extends Component {
             boardType: e.target.value,
             editingType: false
         })
-        axios.put(`/api/board-type`, {type: e.target.value, boardId: this.props.match.params.boardid})
+        axios.put(`/api/board-type`, { type: e.target.value, boardId: this.props.match.params.boardid })
+    }
+
+    updateShow() {
+        this.setState({
+            show: !this.state.show
+        })
     }
 
     render() {
         if (this.state.cardInfo) {
             var card = this.state.cardInfo.map((card, i) => {
                 return (
-                    <Card key={i} card={card} boardId={this.props.match.params.boardid}/>
+                    <Card key={i} card={card} boardId={this.props.match.params.boardid} />
                 )
             })
         }
@@ -120,15 +129,15 @@ class SingleBoard extends Component {
                     {
                         this.state.editingName
                             ?
-                            <input type="text" 
-                            name="boardName"
-                            value={this.state.boardName}
-                            onChange={this.updateInput} 
-                            onKeyPress={(e) => this.handleKeyPress(e, "editingName", this.state.boardName)}/>
+                            <input type="text"
+                                name="boardName"
+                                value={this.state.boardName}
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingName", this.state.boardName)} />
                             :
                             <button
-                            name="editingName"
-                            onClick={this.updateEditing}>{this.state.boardName}</button>
+                                name="editingName"
+                                onClick={this.updateEditing}>{this.state.boardName}</button>
                     }
                     {
                         this.state.editingType
@@ -139,25 +148,27 @@ class SingleBoard extends Component {
                             </select>
                             :
                             <button
-                            name="editingType"
-                            onClick={this.updateEditing}>{this.state.boardType}</button>
+                                name="editingType"
+                                onClick={this.updateEditing}>{this.state.boardType}</button>
                     }
+                    <button onClick={this.updateShow}>Recycling Bin</button>
                 </div>
                 {card}
                 {
                     this.state.addingCard
-                    ?
+                        ?
                         <input type="text"
-                        placeholder="Enter Card Name"
-                        name="cardName"
-                        value={this.state.cardName}
-                        onChange={this.updateInput}
-                        onKeyPress={(e) => this.handleKeyPress(e, "addingCard", this.state.cardName)}/>
-                    :
+                            placeholder="Enter Card Name"
+                            name="cardName"
+                            value={this.state.cardName}
+                            onChange={this.updateInput}
+                            onKeyPress={(e) => this.handleKeyPress(e, "addingCard", this.state.cardName)} />
+                        :
                         <button
-                        name="addingCard"
-                        onClick={this.updateEditing}>Add Card</button>
+                            name="addingCard"
+                            onClick={this.updateEditing}>Add Card</button>
                 }
+                <CardsTasksRecyclingBinModal show={this.state.show} updateShow={this.updateShow} />
             </div>
         )
     }
