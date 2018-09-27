@@ -261,12 +261,18 @@ module.exports = {
 
     updateTaskArchived: async (req, res) => {
         const db = req.app.get("db")
-        const { archived, taskId, cardId, type } = req.body
+        const { archived, taskId, cardId, type, boardId } = req.body
         
         try{
             db.update_task_archived([archived, taskId])
-            let tasksRes = await db.get_card_tasks([cardId, type])
-            res.status(200).send(tasksRes)
+            if(cardId) {
+                let tasksRes = await db.get_card_tasks([cardId, type])
+                res.status(200).send(tasksRes)
+            }
+            else if(boardId) {
+                let tasksRes = await db.get_archived_tasks([boardId])
+                res.status(200).send(tasksRes)
+            }
         }catch(err) {
             console.log(err)
         }

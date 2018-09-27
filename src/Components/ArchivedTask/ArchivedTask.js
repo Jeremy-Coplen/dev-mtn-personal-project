@@ -14,7 +14,7 @@ class ArchivedTask extends Component {
         return (
             <div>
                 <h2>{archivedTask.task_name}</h2>
-                <button>Restore</button>
+                <button onClick={() => this.props.restoreTaks(archivedTask.task_id)}>Restore</button>
                 <button>Delete</button>
             </div>
         )

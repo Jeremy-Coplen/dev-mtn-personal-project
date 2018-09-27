@@ -21,7 +21,8 @@ class SingleBoard extends Component {
             editingName: false,
             editingType: false,
             addingCard: false,
-            show: false
+            show: false,
+            restoreTask: false
         }
         this.updateEditing = this.updateEditing.bind(this)
         this.updateInput = this.updateInput.bind(this)
@@ -29,6 +30,7 @@ class SingleBoard extends Component {
         this.updateShow = this.updateShow.bind(this)
         this.recycleCard = this.recycleCard.bind(this)
         this.restoreCard = this.recycleCard.bind(this)
+        this.restoreTask = this.restoreTask.bind(this)
     }
 
 
@@ -129,12 +131,18 @@ class SingleBoard extends Component {
         }
     }
 
+    restoreTask() {
+        this.setState({
+            restoreTask: !this.state.restoreTask
+        })
+    }
+
 
     render() {
         if (this.state.cardInfo) {
             var card = this.state.cardInfo.map(card => {
                 return (
-                    <Card key={card.card_id} card={card} boardId={this.props.match.params.boardid} recycleCard={this.recycleCard} />
+                    <Card key={card.card_id} card={card} boardId={this.props.match.params.boardid} recycleCard={this.recycleCard} restoreTask={this.state.restoreTask} />
                 )
             })
         }
@@ -197,7 +205,7 @@ class SingleBoard extends Component {
                             name="addingCard"
                             onClick={this.updateEditing}>Add Card</button>
                 }
-                <CardsTasksRecyclingBinModal show={this.state.show} updateShow={this.updateShow} restoreCard={this.restoreCard} />
+                <CardsTasksRecyclingBinModal show={this.state.show} updateShow={this.updateShow} restoreCard={this.restoreCard} restoreTask={this.restoreTask} />
             </div>
         )
     }

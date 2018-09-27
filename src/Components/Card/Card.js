@@ -26,6 +26,15 @@ class Card extends Component {
         })
     }
 
+    async componentDidUpdate(prevProps) {
+        if(prevProps.restoreTask !== this.props.restoreTask) {
+            let tasksRes = await axios.get(`/api/tasks/${this.props.card.card_id}`)
+            this.setState({
+                tasks: tasksRes.data
+            })
+        }
+    }
+
     updateEditing(e) {
         this.setState({
             [e.target.name]: true

@@ -14,6 +14,7 @@ class CardsTasksRecyclingBinModal extends Component {
             archivedTasks: []
         }
         this.restoreCard = this.restoreCard.bind(this)
+        this.restoreTask = this.restoreTask.bind(this)
     }
 
     async componentDidMount() {
@@ -56,18 +57,30 @@ class CardsTasksRecyclingBinModal extends Component {
         }
     }
 
+    async restoreTask(taskId) {
+        try {
+            let tasksRes = await axios.put("/api/task-archived", { archived: false, taskId, boardId: this.props.match.params.boardid})
+            this.setState({
+                archivedTasks: tasksRes.data
+            })
+            this.props.restoreTask()
+        }catch(err) {
+            console.log(err)
+        }
+    }
+
     render() {
         if(this.state.archivedCards) {
            var archivedCards = this.state.archivedCards.map(archivedCard => {
                 return (
-                    <ArchivedCard key={archivedCard.card_id} archivedCard={archivedCard} restoreCard={this.restoreCard}/>
+                    <ArchivedCard key={archivedCard.card_id} archivedCard={archivedCard} restoreCard={this.restoreCard} />
                 )
             })
         }
         if(this.state.archivedTasks) {
             var archivedTasks = this.state.archivedTasks.map(archivedTask => {
                 return (
-                    <ArchivedTask key={archivedTask.task_id} archivedTask={archivedTask}/>
+                    <ArchivedTask key={archivedTask.task_id} archivedTask={archivedTask} restoreTask={this.restoreTask} />
                 )
             })
         }
