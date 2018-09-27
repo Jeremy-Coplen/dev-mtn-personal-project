@@ -91,7 +91,7 @@ class CardsTasksRecyclingBinModal extends Component {
                     <button onClick={() => this.props.updateShow()}>Close</button>
                     <h1>Cards:</h1>
                     {archivedCards}
-                    <h2>Tasks:</h2>
+                    <h1>Tasks:</h1>
                     {archivedTasks}
                 </div>
             </div>

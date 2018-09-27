@@ -264,7 +264,7 @@ module.exports = {
         const { archived, taskId, cardId, type, boardId } = req.body
         
         try{
-            db.update_task_archived([archived, taskId])
+            await db.update_task_archived([archived, taskId])
             if(cardId) {
                 let tasksRes = await db.get_card_tasks([cardId, type])
                 res.status(200).send(tasksRes)
