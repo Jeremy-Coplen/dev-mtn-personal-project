@@ -301,5 +301,17 @@ module.exports = {
         }catch(err) {
             console.log(err)
         }
+    },
+
+    deleteTask: async (req, res) => {
+        const db = req.app.get("db")
+
+        try {
+            await db.delete_task([Number(req.params.taskid)])
+            let tasksRes = await db.get_archived_tasks([Number(req.params.boardid)])
+            res.status(200).send(tasksRes)
+        }catch(err) {
+            console.log(err)
+        }
     }
 }

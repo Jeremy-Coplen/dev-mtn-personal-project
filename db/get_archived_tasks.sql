@@ -3,3 +3,4 @@ join cards c on c.card_id = t.card_id
 where c.archived = false
 and t.archived = true
 and c.board_id = $1
+order by t.task_id

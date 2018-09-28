@@ -56,7 +56,7 @@ app.put("/api/card-archived", c.updateCardArchived)
 app.put("/api/task-archived", c.updateTaskArchived)
 app.delete("/api/board/:boardid", c.deleteBoard)
 app.delete("/api/card/:boardid/:cardid", c.deleteCard)
-
+app.delete("/api/task/:boardid/:taskid", c.deleteTask)
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db)
     app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`))

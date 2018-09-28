@@ -86,9 +86,15 @@ class SingleBoard extends Component {
                 else if (e.target.name === "cardName") {
                     let newCard = await axios.post("/api/card", { name: value, boardId: this.props.match.params.boardid })
                     this.setState({
-                        cardInfo: [...this.state.cardInfo, newCard.data]
+                        cardInfo: [...this.state.cardInfo, newCard.data],
+                        cardName: ""
                     })
                 }
+            }
+            else if(e.key === "Enter" && this.state[e.target.name].length === 0) {
+                this.setState({
+                    [edit]: false
+                })
             }
         }catch(err) {
             console.log(err)
