@@ -17,7 +17,7 @@ class ArchivedBoard extends Component {
                 <h1>{archivedBoard.board_name}</h1>
                 <h2>type: {archivedBoard.board_type}</h2>
                 <button onClick={() => this.props.restoreBoard(this.state.archivedBoard.board_id)}>Restore</button>
-                <button>Delete</button>
+                <button onClick={() => this.props.deleteBoard(archivedBoard.board_id)}>Delete</button>
             </div>
         )
     }

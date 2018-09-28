@@ -54,7 +54,6 @@ class BoardsList extends Component {
     async recycleBoard(boardId) {
         try{
             let boardsRes = await axios.put("/api/board-archived", { archived: true, boardId, type: false})
-            console.log(boardsRes.data)
             this.setState({
                 boards: boardsRes.data
             })
