@@ -289,5 +289,17 @@ module.exports = {
         }catch(err) {
             console.log(err)
         }
+    },
+
+    deleteCard: async (req, res) => {
+        const db = req.app.get("db")
+
+        try {
+            await db.delete_card([Number(req.params.cardid)])
+            let cardsRes = await db.get_board_cards([Number(req.params.boardid), true])
+            res.status(200).send(cardsRes)
+        }catch(err) {
+            console.log(err)
+        }
     }
 }
