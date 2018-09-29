@@ -53,6 +53,7 @@ class SingleBoard extends Component {
                 boardName: boardRes.data[0].board_name,
                 boardType: boardRes.data[0].board_type
             })
+            await axios.put("/api/last-board-viewed", {boardId: this.props.match.params.boardid})
         } catch (err) {
             console.log(err)
         }

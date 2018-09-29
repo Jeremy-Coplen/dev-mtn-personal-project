@@ -60,6 +60,17 @@ module.exports = {
         }
     },
 
+    getLastBoardViewed: async (req, res) => {
+        const db = req.app.get("db")
+
+        try {
+            let boardRes = await db.get_one_board([Number(req.params.boardid), req.session.user.user_id])
+            res.status(200).send(boardRes[0])
+        }catch(err) {
+            console.log(err)
+        }
+    },
+
     getUserBoards: async (req, res) => {
         const db = req.app.get("db")
 
@@ -227,6 +238,17 @@ module.exports = {
         const { details, taskId } = req.body
 
         db.update_task_details([details, taskId])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
+    updateLastBoardViewed: (req, res) => {
+        const db = req.app.get("db")
+        const { boardId } = req.body
+
+        db.update_last_board_viewed([boardId, req.session.user.user_id])
         .then(() => {
             res.sendStatus(200)
         })

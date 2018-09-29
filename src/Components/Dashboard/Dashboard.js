@@ -6,6 +6,14 @@ import { connect } from "react-redux"
 import { getUserData } from "../../Ducks/reducer"
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            lastBoardViewed: {}
+        }
+    }
+
      async componentDidMount() {
         try {
             let userRes = await axios.get("/api/user-data")
@@ -16,16 +24,34 @@ class Dashboard extends Component {
                 this.props.history.push("/")
             }
         }
+
+        try {
+            let lastBoardRes = await axios.get(`/api/last-board-viewed/${this.props.user.last_board_viewed}`)
+            this.setState({
+                lastBoardViewed: lastBoardRes.data
+            })
+        }catch(err) {
+            console.log(err)
+        }
     }
 
     render() {
+        const { lastBoardViewed } = this.state
         return (
             <div>
                 <Link to="/boards"><button>Boards</button></Link>
                 <Link to="/teams"><button>Teams</button></Link>
-                <div>
-                    <h1>This is where the last looked at board will go</h1>
-                </div>
+                {
+                    lastBoardViewed
+                    ?
+                    <div>
+                        <img src={lastBoardViewed.board_image} alt="board"/>
+                        <h1>{lastBoardViewed.board_name}</h1>
+                        <h2>Type: {lastBoardViewed.board_type}</h2>
+                    </div>
+                    :
+                        <h1>No board found</h1>
+                }
             </div>
         )
     }
