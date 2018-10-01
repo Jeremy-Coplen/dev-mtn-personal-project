@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { HashRouter as Router } from "react-router-dom"
 
+import { connect } from "react-redux"
+
 import NavBar from "./Components/NavBar/NavBar"
 import routes from "./routes"
 
@@ -10,7 +12,7 @@ class App extends Component {
       <div className="App">
         <Router>
           <div>
-            <NavBar />
+            <NavBar updateImageChanged={this.updateImageChanged} />
             {routes}
           </div>
         </Router>
@@ -19,4 +21,10 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(App);

@@ -255,6 +255,17 @@ module.exports = {
         .catch(err => console.log(err))
     },
 
+    updateBackgroundImage: (req, res) => {
+        const db = req.app.get("db")
+        const { backgroundImage } = req.body
+
+        db.update_background_image([backgroundImage, req.session.user.user_id])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
+    },
+
     updateBoardArchived: async (req, res) => {
         const db = req.app.get("db")
         const { archived, boardId, type } = req.body

@@ -37,6 +37,11 @@ class BoardsList extends Component {
                 this.props.history.push("/")
             }
         }
+
+        let elems = document.getElementsByClassName("background_image")
+            for(let i = 0; i < elems.length; i++) {
+                elems[i].style.backgroundImage = `url("${this.props.user.background_image}")`
+            }
     }
 
     updateBoardShow() {
@@ -82,7 +87,7 @@ class BoardsList extends Component {
             })
         }
         return (
-            <div>
+            <div className="background_image">
                 <button onClick={this.updateRecycleShow}>Recycling Bin</button>
                 {board}
                 <button onClick={this.updateBoardShow}>Add board</button>

@@ -25,6 +25,11 @@ class Dashboard extends Component {
             }
         }
 
+        let elems = document.getElementsByClassName("background_image")
+            for(let i = 0; i < elems.length; i++) {
+                elems[i].style.backgroundImage = `url("${this.props.user.background_image}")`
+            }
+
         try {
             let lastBoardRes = await axios.get(`/api/last-board-viewed/${this.props.user.last_board_viewed}`)
             this.setState({
@@ -38,7 +43,7 @@ class Dashboard extends Component {
     render() {
         const { lastBoardViewed } = this.state
         return (
-            <div>
+            <div className="background_image">
                 <Link to="/boards"><button>Boards</button></Link>
                 <Link to="/teams"><button>Teams</button></Link>
                 {
