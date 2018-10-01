@@ -17,12 +17,12 @@ class NavBar extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.user.background_image !== this.props.user.background_image){
+        if (prevProps.user.background_image !== this.props.user.background_image) {
             this.setState({
                 backgroundImage: this.props.user.background_image
             })
             let elems = document.getElementsByClassName("background_image")
-            for(let i = 0; i < elems.length; i++) {
+            for (let i = 0; i < elems.length; i++) {
                 elems[i].style.backgroundImage = `url("${this.props.user.background_image}")`
             }
         }
@@ -50,16 +50,16 @@ class NavBar extends Component {
                 await axios.put("/api/user-background", { backgroundImage: e.target.value })
                 let userRes = await axios.get("/api/user-data")
                 this.props.getUserData(userRes.data)
-            }catch(err) {
-                if(err.response.status === 401) {
+            } catch (err) {
+                if (err.response.status === 401) {
                     alert("Go Login")
                     this.props.history.push("/")
                 }
             }
             let elems = document.getElementsByClassName("background_image")
-            for(let i = 0; i < elems.length; i++) {
+            for (let i = 0; i < elems.length; i++) {
                 elems[i].style.backgroundImage = `url("${e.target.value}")`
-            } 
+            }
         }
         else if (e.key === "Enter" && this.state.backgroundImage.length === 0) {
             this.setState({
@@ -77,25 +77,29 @@ class NavBar extends Component {
                         ?
                         null
                         :
-                        <div>
-                            <img src="" alt="logo" />
-                            <Link to="/dashboard"><button>Dashboard</button></Link>
-                            <Link to="/boards"><button>Boards</button></Link>
-                            <Link to="/teams"><button>Teams</button></Link>
-                            <img className="profile_image" src={user.profile_image} alt="profile" />
-                            <h3>{user.username}</h3>
-                            {
-                                this.state.editingBackgroundImage
-                                    ?
-                                    <input type="text"
-                                        placeholder="Enter image url"
-                                        value={this.state.backgroundImage}
-                                        onChange={(e) => this.updateBackgroundImage(e.target.value)}
-                                        onKeyPress={this.handleKeyPress} />
-                                    :
-                                    <button onClick={() => this.updateEditingBackgroundImage()}>Change Background</button>
-                            }
-                            <a href="http://localhost:3000/logout"><button>Logout</button></a>
+                        <div className="nav_bar">
+                            <img className="logo" src="https://cdn0.iconfinder.com/data/icons/business-and-finance-vol-2/48/65-512.png" alt="logo" />
+                            <div className="nav_bar_links">
+                                <Link className="link_button" to="/dashboard"><div>Dashboard</div></Link>
+                                <Link className="link_button" to="/boards"><div>Boards</div></Link>
+                                <Link className="link_button" to="/teams"><div>Teams</div></Link>
+                            </div>
+                            <div className="nav_bar_profile">
+                                {
+                                    this.state.editingBackgroundImage
+                                        ?
+                                        <input type="text"
+                                            placeholder="Enter image url"
+                                            value={this.state.backgroundImage}
+                                            onChange={(e) => this.updateBackgroundImage(e.target.value)}
+                                            onKeyPress={this.handleKeyPress} />
+                                        :
+                                        <div className="background_button" onClick={() => this.updateEditingBackgroundImage()}>Change Background</div>
+                                }
+                                <img className="profile_image" src={user.profile_image} alt="profile" />
+                                <h3>{user.username}</h3>
+                                <a className="logout_button" href="http://localhost:3000/logout"><div>Logout</div></a>
+                            </div>
                         </div>
                 }
             </div>

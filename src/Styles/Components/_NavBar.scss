@@ -1,9 +1,97 @@
+@import "../variables";
+@import "../mixins";
+
+.nav_bar {
+    @include flexo;
+    font-size: 15px;
+    overflow: auto;
+    text-align: center;
+    background: $dark;
+    @media only screen and (min-width: 640px) {
+        @include flexo($justify: space-between);
+        font-size: 20px;
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 30px;
+    }
+}
+
+.nav_bar_links {
+    @include flexo(column);
+    @media only screen and (min-width: 640px) {
+        @include flexo;
+    }
+}
+
+.logo {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    @media only screen and (min-width: 1200px) {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+.nav_bar_profile {
+    @include flexo;
+}
+
 .profile_image {
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
     border-radius: 50px;
 }
 
 .background_image {
     background-size: cover;
+}
+
+.link_button {
+    background: white;
+    margin-top: 5px;
+    border-radius: 5px;
+    width: 100px;
+    @media only screen and (min-width: 640px) {
+        margin-right: 10px;
+        margin-top: 2px;
+    }
+    @media only screen and (min-width: 1200px) {
+        width: 140px;
+    }
+}
+
+.background_button {
+    background: white;
+    border-radius: 5px;
+    margin-left:  5px;
+    margin-right: 5px;
+    height: 32px;
+    @media only screen and (min-width: 640px) {
+        height: 22px;
+        margin-left: 0;
+        margin-right: 10px;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 32px;
+    }
+}
+
+.logout_button {
+    background: white;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+    width: 80px;
+    height: 18px;
+    padding-top: 1px;
+    @media only screen and (min-width: 640px) {
+        height: 22px;
+        margin-right: 10px;
+        padding-top: 0;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 32px;
+        width: 100px;
+    }
 }

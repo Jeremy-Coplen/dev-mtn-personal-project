@@ -1,0 +1,46 @@
+@import "../mixins";
+@import "../variables";
+@import url('https://fonts.googleapis.com/css?family=Chakra+Petch');
+
+.login {
+    @include flexo(column);
+    width: 100vw;
+    height: 100vh;
+    background: $dark;
+    text-align: center;
+    font-family: "Chakra Petch", sans-serif;
+    font-size: 30px;
+    @media only screen and (min-width: 640px) {
+        font-size: 50px;
+    }
+
+    @media only screen and (min-width: 1200px) {
+        font-size: 75px;
+    }
+}
+
+.login_button {
+    background: linear-gradient(to right, rgb(5, 115, 241), rgb(2, 241, 94));
+    width: 167px;
+    height: 61px;
+    font-size: 25px;
+    padding-top: 15px;
+    border-radius: 10px;
+}
+
+.logo_name {
+    margin-bottom: 15px;
+    @media only screen and (min-width: 640px) {
+        @include flexo;
+        margin-bottom: 35px;
+    }
+}
+
+#front_logo {
+    width: 200px;
+    height: 200px;
+    @media only screen and (min-width: 1200px) {
+        width: 350px;
+        height: 350px;
+    }
+}

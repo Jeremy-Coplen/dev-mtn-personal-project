@@ -14,8 +14,12 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
-                <button onClick={this.login}>Login</button>
+            <div className="login">
+                <div className="logo_name">
+                    <img id="front_logo" src="https://cdn0.iconfinder.com/data/icons/business-and-finance-vol-2/48/65-512.png" alt="" />
+                    <h1>Get On Track</h1>
+                </div>
+                <div className="login_button" onClick={this.login}>Get Started</div>
             </div>
         )
     }
