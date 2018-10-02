@@ -13,15 +13,15 @@ class Board extends Component {
     render() {
         const { board } = this.state
         return (
-            <div>
+            <div className="board">
                 <Link to={`/board/${board.board_id}`}>
-                    <div>
-                        <img src={board.board_image} alt="board"/>
-                        <h1>{board.board_name}</h1>
-                        <h2>type: {board.board_type}</h2>
+                    <div className="board_content">
+                        <img className="board_image" src={board.board_image} alt="board"/>
+                        <h1 className="board_name">{board.board_name}</h1>
+                        <h2 className="board_name">type: {board.board_type}</h2>
                     </div>
                 </Link>
-                <button onClick={() => this.props.recycleBoard(board.board_id)}>Recycle</button>
+                <div className="recycle_button" onClick={() => this.props.recycleBoard(board.board_id)}>Recycle</div>
             </div>
         )
     }

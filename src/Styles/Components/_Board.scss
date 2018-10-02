@@ -1,0 +1,32 @@
+@import "../variables";
+@import "../mixins";
+
+.board {
+    @include flexo($justify: flex-start);
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.board_content {
+    @include flexo;
+}
+
+.board_name {
+    margin-right: 10px;;
+}
+
+.board_image {
+    width: 75px;
+    height: 75px;
+    border-radius: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.recycle_button {
+    background: $light;
+    width: 75px;
+    text-align: center;
+    border-radius: 5px;
+    height: 19px;
+}

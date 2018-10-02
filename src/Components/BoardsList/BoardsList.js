@@ -23,7 +23,7 @@ class BoardsList extends Component {
         this.restoreBoard = this.restoreBoard.bind(this)
     }
 
-    async componentDidMount(){
+    async componentDidMount() {
         try {
             let userRes = await axios.get("/api/user-data")
             this.props.getUserData(userRes.data)
@@ -31,8 +31,8 @@ class BoardsList extends Component {
             this.setState({
                 boards: boardsRes.data
             })
-        }catch(err) {
-            if(err.response.status === 401) {
+        } catch (err) {
+            if (err.response.status === 401) {
                 alert("Go Login")
                 this.props.history.push("/")
             }
@@ -52,29 +52,29 @@ class BoardsList extends Component {
     }
 
     async recycleBoard(boardId) {
-        try{
-            let boardsRes = await axios.put("/api/board-archived", { archived: true, boardId, type: false})
+        try {
+            let boardsRes = await axios.put("/api/board-archived", { archived: true, boardId, type: false })
             this.setState({
                 boards: boardsRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     async restoreBoard() {
-        try{
+        try {
             let boardsRes = await axios.get("/api/user-boards")
             this.setState({
                 boards: boardsRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     render() {
-        if(this.state.boards) {
+        if (this.state.boards) {
             var board = this.state.boards.map(board => {
                 return (
                     <Board key={board.board_id} board={board} recycleBoard={this.recycleBoard} />
@@ -82,11 +82,13 @@ class BoardsList extends Component {
             })
         }
         return (
-            <div>
-                <button onClick={this.updateRecycleShow}>Recycling Bin</button>
-                {board}
-                <button onClick={this.updateBoardShow}>Add board</button>
-                <BoardModal show={this.state.boardShow} updateShow={this.updateBoardShow}/>
+            <div className="boards_list">
+                <div className=" link_button recycling_button" onClick={this.updateRecycleShow}>Recycling Bin</div>
+                <div className=" link_button add_button" onClick={this.updateBoardShow}>Add board</div>
+                <div className="boards">
+                    {board}
+                </div>
+                <BoardModal show={this.state.boardShow} updateShow={this.updateBoardShow} />
                 <BoardsRecyclingBinModal show={this.state.recycleShow} updateShow={this.updateRecycleShow} restoreBoard={this.restoreBoard} />
             </div>
         )

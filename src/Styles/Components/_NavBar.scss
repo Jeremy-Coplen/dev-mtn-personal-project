@@ -61,7 +61,7 @@ body {
 
 
 .link_button {
-    background: white;
+    background: $light;
     margin-top: 5px;
     border-radius: 5px;
     width: 100px;
@@ -75,7 +75,7 @@ body {
 }
 
 .background_button {
-    background: white;
+    background: $light;
     border-radius: 5px;
     margin-left:  5px;
     margin-right: 5px;
@@ -99,7 +99,7 @@ body {
 }
 
 .logout_button {
-    background: white;
+    background: $light;
     margin-right: 25px;
     border-radius: 5px;
     width: 80px;
