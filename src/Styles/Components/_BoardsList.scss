@@ -8,7 +8,7 @@
 
 .boards {
     overflow: auto;
-    width: 90vw;
+    width: 100vw;
 }
 
 .recycling_button {
@@ -16,6 +16,10 @@
     position: absolute;
     right: 0;
     top: 10vh;
+    @media only screen and (min-width: 690px) {
+        font-size: 18px;
+        width: 110px;
+    }
 }
 
 .add_button {
@@ -23,4 +27,9 @@
     position: absolute;
     right: 105px;
     top: 10vh;
+    @media only screen and (min-width: 690px) {
+        font-size: 18px;
+        width: 110px;
+        right: 110px;
+    }
 }

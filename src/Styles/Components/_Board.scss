@@ -3,8 +3,12 @@
 
 .board {
     @include flexo($justify: flex-start);
+    background: $medium_opacity;
     margin-bottom: 20px;
-    margin-top: 10px;
+    margin-top: 25px;
+    margin-left: 5px;
+    width: 97vw;
+    border-radius: 5px;
 }
 
 .board_content {
@@ -21,6 +25,9 @@
     border-radius: 100%;
     margin-left: 10px;
     margin-right: 10px;
+    @media only screen and (min-width: 690px) {
+
+    }
 }
 
 .recycle_button {
@@ -29,4 +36,5 @@
     text-align: center;
     border-radius: 5px;
     height: 19px;
+    margin-right: 5px;
 }
