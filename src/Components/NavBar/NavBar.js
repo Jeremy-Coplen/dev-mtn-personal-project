@@ -84,6 +84,9 @@ class NavBar extends Component {
                                 <Link className="link_button" to="/boards"><div>Boards</div></Link>
                                 <Link className="link_button" to="/teams"><div>Teams</div></Link>
                             </div>
+                            <div className="site_name">
+                                <h2>Get On Track</h2>
+                            </div>
                             <div className="nav_bar_profile">
                                 {
                                     this.state.editingBackgroundImage

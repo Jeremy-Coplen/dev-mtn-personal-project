@@ -1,0 +1,28 @@
+@import "../variables";
+@import "../mixins";
+
+.dashboard {
+    @include flexo(column, flex-start, center);
+    font-size: 20px;
+    height: 91vh;
+    text-align: center;
+}
+
+.side_bar {
+    @include flexo($justify: space-between);
+    margin-bottom: 50px;
+}
+
+.boards_button {
+    margin-right: 53px;
+}
+
+.dashboard_board_image {
+    width: 200px;
+    height: 200px;
+    border-radius: 100px;
+}
+
+.last_board_viewed {
+    background: $medium_opacity;
+}

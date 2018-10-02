@@ -1,5 +1,6 @@
 @import "../variables";
 @import "../mixins";
+@import url('https://fonts.googleapis.com/css?family=Chakra+Petch');
 
 .nav_bar {
     @include flexo;
@@ -7,9 +8,9 @@
     overflow: auto;
     text-align: center;
     background: $dark;
-    @media only screen and (min-width: 640px) {
+    @media only screen and (min-width: 690px) {
         @include flexo($justify: space-between);
-        font-size: 20px;
+        font-size: 17px;
     }
     @media only screen and (min-width: 1200px) {
         font-size: 30px;
@@ -18,7 +19,7 @@
 
 .nav_bar_links {
     @include flexo(column);
-    @media only screen and (min-width: 640px) {
+    @media only screen and (min-width: 690px) {
         @include flexo;
     }
 }
@@ -52,7 +53,7 @@
     margin-top: 5px;
     border-radius: 5px;
     width: 100px;
-    @media only screen and (min-width: 640px) {
+    @media only screen and (min-width: 690px) {
         margin-right: 10px;
         margin-top: 2px;
     }
@@ -67,10 +68,14 @@
     margin-left:  5px;
     margin-right: 5px;
     height: 32px;
-    @media only screen and (min-width: 640px) {
-        height: 22px;
+    @media only screen and (min-width: 690px) {
+        height: 37px;
         margin-left: 0;
         margin-right: 10px;
+    }
+    @media only screen and (min-width: 737px) {
+        height: 20px;
+        margin-top: 1px;
     }
     @media only screen and (min-width: 1200px) {
         height: 32px;
@@ -85,7 +90,7 @@
     width: 80px;
     height: 18px;
     padding-top: 1px;
-    @media only screen and (min-width: 640px) {
+    @media only screen and (min-width: 690px) {
         height: 22px;
         margin-right: 10px;
         padding-top: 0;
@@ -93,5 +98,13 @@
     @media only screen and (min-width: 1200px) {
         height: 32px;
         width: 100px;
+    }
+}
+
+.site_name {
+    display: none;
+    @media only screen and (min-width: 960px) {
+        display: flex;
+        font-family: "Chakra Petch", sans-serif;
     }
 }
