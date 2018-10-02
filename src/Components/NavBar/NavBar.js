@@ -21,10 +21,7 @@ class NavBar extends Component {
             this.setState({
                 backgroundImage: this.props.user.background_image
             })
-            let elems = document.getElementsByClassName("background_image")
-            for (let i = 0; i < elems.length; i++) {
-                elems[i].style.backgroundImage = `url("${this.props.user.background_image}")`
-            }
+                document.body.style.backgroundImage = `url("${this.props.user.background_image}")`
         }
     }
 

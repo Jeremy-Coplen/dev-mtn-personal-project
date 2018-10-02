@@ -45,11 +45,6 @@ class SingleBoard extends Component {
             }
         }
 
-        let elems = document.getElementsByClassName("background_image")
-            for(let i = 0; i < elems.length; i++) {
-                elems[i].style.backgroundImage = `url("${this.props.user.background_image}")`
-            }
-
         try {
             let boardRes = await axios.get(`/api/board-cards/${this.props.match.params.boardid}`)
             this.setState({
@@ -159,7 +154,7 @@ class SingleBoard extends Component {
             })
         }
         return (
-            <div className="background_image">
+            <div>
                 <div>
                     {
                         this.state.editingImage

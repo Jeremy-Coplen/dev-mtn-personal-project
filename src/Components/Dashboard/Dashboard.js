@@ -25,11 +25,6 @@ class Dashboard extends Component {
             }
         }
 
-        let elems = document.getElementsByClassName("background_image")
-        for (let i = 0; i < elems.length; i++) {
-            elems[i].style.backgroundImage = `url("${this.props.user.background_image}")`
-        }
-
         try {
             let lastBoardRes = await axios.get(`/api/last-board-viewed/${this.props.user.last_board_viewed}`)
             this.setState({
@@ -42,8 +37,9 @@ class Dashboard extends Component {
 
     render() {
         const { lastBoardViewed } = this.state
+        console.log(lastBoardViewed)
         return (
-            <div className="dashboard background_image">
+            <div className="dashboard">
                 <div className="side_bar">
                     <Link className="link_button boards_button" to="/boards"><div>Boards</div></Link>
                     <Link className="link_button" to="/teams"><div>Teams</div></Link>
@@ -51,13 +47,15 @@ class Dashboard extends Component {
                 {
                     lastBoardViewed
                         ?
-                        <div>
-                        <img className="dashboard_board_image" src={lastBoardViewed.board_image} alt="board" />
-                        <div className="last_board_viewed">
-                            <h1>{lastBoardViewed.board_name}</h1>
-                            <h2>Type: {lastBoardViewed.board_type}</h2>
-                        </div>
-                        </div>
+                        <Link to={`/board/${lastBoardViewed.board_id}`}>
+                            <div>
+                                <img className="dashboard_board_image" src={lastBoardViewed.board_image} alt="board" />
+                                <div className="last_board_viewed">
+                                    <h1>{lastBoardViewed.board_name}</h1>
+                                    <h2>Type: {lastBoardViewed.board_type}</h2>
+                                </div>
+                            </div>
+                        </Link>
                         :
                         <h1>No board found</h1>
                 }

@@ -4,8 +4,10 @@
 .dashboard {
     @include flexo(column, flex-start, center);
     font-size: 20px;
-    height: 91vh;
     text-align: center;
+    width: 100vw;
+    height: 90vh;
+    overflow: hidden;
 }
 
 .side_bar {
