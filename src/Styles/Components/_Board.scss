@@ -9,24 +9,44 @@
     margin-left: 5px;
     width: 97vw;
     border-radius: 5px;
+    @media only screen and (min-width: 690px) {
+        @include flexo($justify: space-between)
+    }
+    @media only screen and (min-width: 1050px) {
+        @include flexo;
+        width: 70vw;
+    }
 }
 
 .board_content {
-    @include flexo;
-}
-
-.board_name {
-    margin-right: 10px;;
-}
-
-.board_image {
-    width: 75px;
-    height: 75px;
-    border-radius: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
+    @include flexo($justify: flex-start);
+    width: 77vw;
+    img {
+        width: 75px;
+        height: 75px;
+        border-radius: 100%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    h1, h2 {
+        margin-right: 10px;
+    }
     @media only screen and (min-width: 690px) {
-
+        @include flexo($justify: space-between);
+        font-size: 20px;
+        img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 63vw;
+        h2 {
+            margin-right: 35px;
+        }
+    }
+    @media only screen and (min-width: 1200px) {
+        font-size: 25px;
     }
 }
 

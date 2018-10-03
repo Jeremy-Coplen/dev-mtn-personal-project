@@ -4,11 +4,17 @@
 .boards_list {
     @include flexo(column, flex-start, flex-start);
     height: 90vh;
+    @media only screen and (min-width: 1050px) {
+        @include flexo($align: flex-start);
+    }
 }
 
 .boards {
     overflow: auto;
     width: 100vw;
+    @media only screen and (min-width: 1050px) {
+        @include flexo(column);
+    }
 }
 
 .recycling_button {
@@ -30,6 +36,6 @@
     @media only screen and (min-width: 690px) {
         font-size: 18px;
         width: 110px;
-        right: 110px;
+        right: 120px;
     }
 }
