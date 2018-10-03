@@ -8,11 +8,50 @@
     left: 0;
     right: 0;
     bottom: 0;
-    div {
-        background: $light;
-    }
+    overflow: hidden;
 }
 
 .board_display_none {
     display: none;
+}
+
+.board_modal_content {
+    @include flexo(column, space-between, flex-end);
+    @include shadow;
+    background: $light;
+    position: absolute;
+    top: 20%;
+    left: 13%;
+    width: 72vw;
+    height: 72vw;
+    font-size: 20px;
+    div {
+        input, select, h1 {
+            margin-bottom: 10px;
+        }
+        h1 {
+            margin-top: 10px;
+        }
+    }
+}
+
+.close_button {
+    background: $medium;
+    @include border;
+    border-top: none;
+    border-right: none;
+}
+
+.confirm_button {
+    background: $medium;
+    @include border;
+    border-right: none;
+
+}
+
+.board_modal_input {
+    @include flexo(column);
+    background: $medium;
+    width: 65vw;
+    margin-right: 12px;
 }

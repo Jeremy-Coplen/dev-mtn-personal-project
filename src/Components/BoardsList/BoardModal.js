@@ -29,46 +29,58 @@ class BoardModal extends Component {
         })
     }
 
-  async createBoard(name, type, userId, image) {
-      const defaultCards = ["To Do Eventually", "To Do Today", "Done"]
-        if(!image) {
+    async createBoard(name, type, userId, image) {
+        const defaultCards = ["To Do Eventually", "To Do Today", "Done"]
+        if (!image) {
             image = "https://rajshankar.files.wordpress.com/2013/07/to-do-list1.png"
         }
-        if(!type) {
+        if (!type) {
             type = "Personal"
         }
-        if(!name) {
+        if (!name) {
             name = "Board Name"
         }
-        try{
+        try {
             let boardId = await axios.post("/api/board", { name, type, userId, image, defaultCards })
             this.props.history.push(`/board/${boardId.data}`)
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
+    }
+
+    close() {
+        this.setState({
+            name: "",
+            type: "",
+            image: ""
+        })
+        this.props.updateShow()
     }
 
     render() {
         const showHideClassName = this.props.show ? "board_display" : "board_display_none"
         return (
             <div className={showHideClassName}>
-                <div>
-                    <button onClick={() => this.props.updateShow()}>Close</button>
-                    <input type="text"
-                    placeholder="Enter Board Name"
-                    name="name"
-                    value={this.state.name}
-                    onChange={this.updateInput}/>
-                    <select onChange={this.handleSelection}>
-                        <option value="Personal">Personal</option>
-                        <option value="Team">Team</option>
-                    </select>
-                    <input type="text"
-                    placeholder="Enter Image URL"
-                    name="image"
-                    value={this.state.image}
-                    onChange={this.updateInput}/>
-                    <button onClick={() => this.createBoard(this.state.name, this.state.type, this.props.user.user_id, this.state.image)}>Confirm</button>
+                <div className="board_modal_content">
+                    <div className="close_button" onClick={() => this.close()}>X</div>
+                    <div className="board_modal_input">
+                        <h1>Board Info:</h1>
+                        <input type="text"
+                            placeholder="Enter Board Name"
+                            name="name"
+                            value={this.state.name}
+                            onChange={this.updateInput} />
+                        <input type="text"
+                            placeholder="Enter Image URL"
+                            name="image"
+                            value={this.state.image}
+                            onChange={this.updateInput} />
+                        <select onChange={this.handleSelection}>
+                            <option value="Personal">Personal</option>
+                            <option value="Team">Team</option>
+                        </select>
+                    </div>
+                    <div className="confirm_button" onClick={() => this.createBoard(this.state.name, this.state.type, this.props.user.user_id, this.state.image)}>Confirm</div>
                 </div>
             </div>
         )

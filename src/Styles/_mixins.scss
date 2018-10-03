@@ -1,7 +1,19 @@
 // display flex
-@mixin flexo($direction: row, $justify: center, $align: center){
+@mixin flexo($direction: row, $justify: center, $align: center) {
     display: flex;
     flex-direction: $direction;
     justify-content: $justify;
     align-items: $align;
+}
+
+// border
+@mixin border() {
+    border: 1px solid black;
+}
+
+// box shadow
+@mixin shadow($color: black) {
+    -webkit-box-shadow: 6px 6px 40px -2px  $color;
+    -moz-box-shadow: 6px 6px 40px -2px  $color;
+    box-shadow: 6px 6px 40px -2px  $color;
 }
