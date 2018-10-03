@@ -37,9 +37,7 @@
         top: 10%;
     }
     @media only screen and (min-width: 690px) {
-        height: 50vh;
-    }
-    @media only screen and (min-width: 780px) {
+        height: 60vh;
         width: 60vw;
         left: 20%;
     }
@@ -68,10 +66,10 @@
     @include shadow;
     width: 65vw;
     margin: auto;
+    @media only screen and (min-width: 690px) {
+        width: 37vw;
+    }
     @media only screen and (min-width: 1050px) {
         width: 30vw;
-    }
-    @media only screen and (min-width: 780px) {
-        width: 37vw;
     }
 }
