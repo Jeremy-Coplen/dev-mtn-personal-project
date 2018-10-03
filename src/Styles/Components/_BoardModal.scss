@@ -33,6 +33,20 @@
             margin-top: 10px;
         }
     }
+    @media only screen and (min-width: 670px) {
+        top: 10%;
+    }
+    @media only screen and (min-width: 690px) {
+        height: 50vh;
+    }
+    @media only screen and (min-width: 780px) {
+        width: 60vw;
+        left: 20%;
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 40vw;
+        left: 31%
+    }
 }
 
 .close_button {
@@ -51,7 +65,13 @@
 
 .board_modal_input {
     @include flexo(column);
-    background: $medium;
+    @include shadow;
     width: 65vw;
-    margin-right: 12px;
+    margin: auto;
+    @media only screen and (min-width: 1050px) {
+        width: 30vw;
+    }
+    @media only screen and (min-width: 780px) {
+        width: 37vw;
+    }
 }
