@@ -8,11 +8,79 @@
     left: 0;
     right: 0;
     bottom: 0;
-    div {
-        background: $light;
-    }
+    overflow: hidden;
 }
 
 .recycling_bin_display_none {
     display: none;
+}
+
+.recycling_bin_content {
+    @include flexo(column, space-between, flex-end);
+    @include shadow;
+    background: $light;
+    position: absolute;
+    top: 20%;
+    left: 7%;
+    width: 87vw;
+    overflow: auto;
+    h1 {
+        margin: auto;
+    }
+    @media only screen and (min-width: 690px) {
+        font-size: 20px;
+    }
+    @media only screen and (min-width: 1200px) {
+        width: 70vw;
+        left: 15%;
+    }
+}
+
+.archived_board {
+    @include flexo($justify: space-between);
+    background: $medium_opacity;
+    margin-bottom: 10px;
+    width: 87vw;
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        margin-right: 5px;
+    }
+    div {
+        @include border;
+        background: $medium;
+        margin-right: 5px;
+        padding: 2px;
+    }
+    h2 {
+        margin-right: 10px;
+    }
+    @media only screen and (min-width: 600px) {
+        h2 {
+            margin-right: 35px;
+        }
+    }
+    @media only screen and (min-width: 850px) {
+        h2{
+            margin-right: 80px;
+        }
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 75vw;
+    }
+    @media only screen and (min-width: 1200px) {
+        width: 60vw;
+    }
+}
+
+.archived_boards {
+    width: 87vw;
+    @media only screen and (min-width: 1050px) {
+        @include flexo(column);
+    }
+    @media only screen and (min-width: 1200px) {
+        width: 70vw;
+    }
+
 }

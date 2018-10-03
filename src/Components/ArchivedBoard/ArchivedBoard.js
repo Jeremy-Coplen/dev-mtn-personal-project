@@ -12,12 +12,12 @@ class ArchivedBoard extends Component {
     render() {
         const { archivedBoard } = this.state
         return (
-            <div>
+            <div className="archived_board">
                 <img src={archivedBoard.board_image} alt="board"/>
                 <h1>{archivedBoard.board_name}</h1>
                 <h2>type: {archivedBoard.board_type}</h2>
-                <button onClick={() => this.props.restoreBoard(this.state.archivedBoard.board_id)}>Restore</button>
-                <button onClick={() => this.props.deleteBoard(archivedBoard.board_id)}>Delete</button>
+                <div onClick={() => this.props.restoreBoard(this.state.archivedBoard.board_id)}>Restore</div>
+                <div onClick={() => this.props.deleteBoard(archivedBoard.board_id)}>Delete</div>
             </div>
         )
     }

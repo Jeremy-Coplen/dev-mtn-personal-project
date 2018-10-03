@@ -26,7 +26,7 @@ class BoardsRecyclingBinModal extends Component {
     }
 
     async componentDidUpdate(prevprops) {
-        if(prevprops.show !== this.props.show) {
+        if (prevprops.show !== this.props.show) {
             try {
                 let boardsRes = await axios.get("/api/user-archived-boards")
                 this.setState({
@@ -56,12 +56,13 @@ class BoardsRecyclingBinModal extends Component {
             this.setState({
                 archivedBoards: boardsRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     render() {
+        console.log(this.state.archivedBoards)
         if (this.state.archivedBoards) {
             var archivedBoards = this.state.archivedBoards.map(archivedBoard => {
                 return (
@@ -72,9 +73,17 @@ class BoardsRecyclingBinModal extends Component {
         const showHideClassName = this.props.show ? "recycling_bin_display" : "recycling_bin_display_none"
         return (
             <div className={showHideClassName}>
-                <div>
-                    <button onClick={() => this.props.updateShow()}>Close</button>
-                    {archivedBoards}
+                <div className="recycling_bin_content">
+                    <div className="close_button" onClick={() => this.props.updateShow()}>X</div>
+                    {
+                        this.state.archivedBoards.length !== 0
+                        ?
+                            <div className="archived_boards">
+                                {archivedBoards}
+                            </div>
+                        :
+                            <h1>Empty</h1>
+                    }
                 </div>
             </div>
         )

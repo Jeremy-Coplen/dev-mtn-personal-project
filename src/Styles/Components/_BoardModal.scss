@@ -52,13 +52,14 @@
     @include border;
     border-top: none;
     border-right: none;
+    padding: 2px;
 }
 
 .confirm_button {
     background: $medium;
     @include border;
     border-right: none;
-
+    padding: 2px;
 }
 
 .board_modal_input {
