@@ -5,7 +5,8 @@ const {
     REACT_APP_CLIENT_ID,
     REACT_APP_DOMAIN,
     CLIENT_SECRET,
-    LOGIN
+    LOGIN,
+    PROTOCALL
 } = process.env
 
 module.exports = {
@@ -18,7 +19,7 @@ module.exports = {
             client_secret: CLIENT_SECRET,
             code: code,
             grant_type: "authorization_code",
-            redirect_uri: `http://${req.headers.host}/auth/callback`
+            redirect_uri: `${PROTOCALL}://${req.headers.host}/auth/callback`
         }
 
         try {
