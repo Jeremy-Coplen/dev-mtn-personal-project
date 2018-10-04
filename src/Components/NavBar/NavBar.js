@@ -53,10 +53,7 @@ class NavBar extends Component {
                     this.props.history.push("/")
                 }
             }
-            let elems = document.getElementsByClassName("background_image")
-            for (let i = 0; i < elems.length; i++) {
-                elems[i].style.backgroundImage = `url("${e.target.value}")`
-            }
+                document.body.style.backgroundImage = `url("${e.target.value}")`
         }
         else if (e.key === "Enter" && this.state.backgroundImage.length === 0) {
             this.setState({
