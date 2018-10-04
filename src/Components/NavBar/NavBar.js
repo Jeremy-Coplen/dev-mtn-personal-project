@@ -98,7 +98,7 @@ class NavBar extends Component {
                                 }
                                 <img className="profile_image" src={user.profile_image} alt="profile" />
                                 <h3>{user.username}</h3>
-                                <a className="logout_button" href="http://localhost:3000/logout"><div>Logout</div></a>
+                                <a className="logout_button" href={`${process.env.REACT_APP_LOGOUT}`}><div>Logout</div></a>
                             </div>
                         </div>
                 }

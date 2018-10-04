@@ -7,6 +7,7 @@ const c = require("./Controllers/controller")
 
 const app = express()
 app.use(express.json())
+app.use(express.static(`${__dirname}/../build`))
 
 const {
     SERVER_PORT,
@@ -60,6 +61,7 @@ app.put("/api/task-archived", c.updateTaskArchived)
 app.delete("/api/board/:boardid", c.deleteBoard)
 app.delete("/api/card/:boardid/:cardid", c.deleteCard)
 app.delete("/api/task/:boardid/:taskid", c.deleteTask)
+
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db)
     app.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`))

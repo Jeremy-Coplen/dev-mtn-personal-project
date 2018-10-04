@@ -4,7 +4,8 @@ const axios = require('axios')
 const {
     REACT_APP_CLIENT_ID,
     REACT_APP_DOMAIN,
-    CLIENT_SECRET
+    CLIENT_SECRET,
+    LOGIN
 } = process.env
 
 module.exports = {
@@ -44,7 +45,7 @@ module.exports = {
     logout: (req, res) => {
         req.session.destroy()
         try {
-            res.redirect("http://localhost:3000/#/")
+            res.redirect(`${LOGIN}`)
         }catch(err){
             console.log(err)
         }
