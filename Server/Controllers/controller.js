@@ -33,6 +33,7 @@ module.exports = {
             } 
             else {
                 let createdUser = await db.create_user([name, email, picture, sub])
+                // console.log("new user", createdUser)
                 req.session.user = createdUser[0]
             }
             console.log()
@@ -66,10 +67,11 @@ module.exports = {
         const db = req.app.get("db")
 
         try {
+            // console.log("params", req.params, "session", req.session)
             let boardRes = await db.get_one_board([Number(req.params.boardid), req.session.user.user_id])
             res.status(200).send(boardRes[0])
         }catch(err) {
-            console.log(err)
+            console.log("get last board viewed", err)
         }
     },
 
@@ -77,6 +79,7 @@ module.exports = {
         const db = req.app.get("db")
 
         try {
+            // console.log(req.session)
             let boardsRes = await db.get_user_boards([req.session.user.user_id, false])
             res.status(200).send(boardsRes)
         }catch(err) {
@@ -251,7 +254,8 @@ module.exports = {
         const { boardId } = req.body
 
         db.update_last_board_viewed([boardId, req.session.user.user_id])
-        .then(() => {
+        .then(user => {
+            req.session.user = user[0]
             res.sendStatus(200)
         })
         .catch(err => console.log(err))
@@ -262,7 +266,8 @@ module.exports = {
         const { backgroundImage } = req.body
 
         db.update_background_image([backgroundImage, req.session.user.user_id])
-        .then(() => {
+        .then(user => {
+            req.session.user = user[0]
             res.sendStatus(200)
         })
         .catch(err => console.log(err))

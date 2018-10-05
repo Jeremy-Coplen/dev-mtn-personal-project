@@ -53,7 +53,10 @@ class SingleBoard extends Component {
                 boardName: boardRes.data[0].board_name,
                 boardType: boardRes.data[0].board_type
             })
-            await axios.put("/api/last-board-viewed", {boardId: this.props.match.params.boardid})
+            await axios.put("/api/last-board-viewed", { boardId: this.props.match.params.boardid })
+            let updatedUserRes = await axios.get("/api/user-data")
+            this.props.getUserData(updatedUserRes.data)
+
         } catch (err) {
             console.log(err)
         }
@@ -73,7 +76,7 @@ class SingleBoard extends Component {
     }
 
     async handleKeyPress(e, edit, value) {
-        try{
+        try {
             if (e.key === "Enter" && this.state[e.target.name].length > 0) {
                 this.setState({
                     [edit]: false
@@ -92,12 +95,12 @@ class SingleBoard extends Component {
                     })
                 }
             }
-            else if(e.key === "Enter" && this.state[e.target.name].length === 0) {
+            else if (e.key === "Enter" && this.state[e.target.name].length === 0) {
                 this.setState({
                     [edit]: false
                 })
             }
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -117,23 +120,23 @@ class SingleBoard extends Component {
     }
 
     async recycleCard(cardId) {
-        try{
-            let cardsRes = await axios.put("/api/card-archived", { archived: true, cardId, boardId: this.props.match.params.boardid, type: false})
+        try {
+            let cardsRes = await axios.put("/api/card-archived", { archived: true, cardId, boardId: this.props.match.params.boardid, type: false })
             this.setState({
                 cardInfo: cardsRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     async restoreCard() {
-        try{
+        try {
             let cardsRes = await axios.get(`/api/board-cards/${this.props.match.params.boardid}`)
             this.setState({
                 cardInfo: cardsRes.data[1]
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -154,8 +157,8 @@ class SingleBoard extends Component {
             })
         }
         return (
-            <div>
-                <div>
+            <div className="single_board">
+                <div className="single_board_info">
                     {
                         this.state.editingImage
                             ?
@@ -179,7 +182,7 @@ class SingleBoard extends Component {
                                 onChange={this.updateInput}
                                 onKeyPress={(e) => this.handleKeyPress(e, "editingName", this.state.boardName)} />
                             :
-                            <button
+                            <button className="not_actual_button"
                                 name="editingName"
                                 onClick={this.updateEditing}>{this.state.boardName}</button>
                     }
@@ -191,27 +194,31 @@ class SingleBoard extends Component {
                                 <option value={this.state.boardType === "Personal" ? "Team" : "Personal"}>{this.state.boardType === "Personal" ? "Team" : "Personal"}</option>
                             </select>
                             :
-                            <button
+                            <button className="not_actual_button"
                                 name="editingType"
                                 onClick={this.updateEditing}>{this.state.boardType}</button>
                     }
-                    <button onClick={this.updateShow}>Recycling Bin</button>
                 </div>
-                {card}
-                {
-                    this.state.addingCard
-                        ?
-                        <input type="text"
-                            placeholder="Enter Card Name"
-                            name="cardName"
-                            value={this.state.cardName}
-                            onChange={this.updateInput}
-                            onKeyPress={(e) => this.handleKeyPress(e, "addingCard", this.state.cardName)} />
-                        :
-                        <button
-                            name="addingCard"
-                            onClick={this.updateEditing}>Add Card</button>
-                }
+                <div className="recycling_button link_button" onClick={this.updateShow}>Recycling Bin</div>
+                <div className="cards_container">
+                    {card}
+                </div>
+                <section>
+                    {
+                        this.state.addingCard
+                            ?
+                            <input type="text"
+                                placeholder="Enter Card Name"
+                                name="cardName"
+                                value={this.state.cardName}
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "addingCard", this.state.cardName)} />
+                            :
+                            <button className="actual_button"
+                                name="addingCard"
+                                onClick={this.updateEditing}>Add Card</button>
+                    }
+                </section>
                 <CardsTasksRecyclingBinModal show={this.state.show} updateShow={this.updateShow} restoreCard={this.restoreCard} restoreTask={this.restoreTask} />
             </div>
         )

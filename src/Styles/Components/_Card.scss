@@ -1,0 +1,64 @@
+@import "../variables";
+@import "../mixins";
+
+.card {
+    @include flexo(column, center, flex-start);
+    background: $medium;
+    width: 80vw;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    height: 20vh;
+    section {
+        @include flexo;
+        width: 80vw;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    @media only screen and (min-width: 690px) {
+        width: 70vw;
+        height: auto;
+        section {
+            width: 70vw;
+        }
+    }
+    @media only screen and (min-width: 850px) {
+        width: 40vw;
+        section {
+            width: 40vw;
+        }
+    }
+}
+
+.card_info {
+    @include flexo($justify: space-between);
+    width: 80vw;
+    margin-bottom: 5px;
+    border-bottom: 1px solid black;
+    padding: 5px;
+    @media only screen and (min-width: 690px) {
+        width: 70vw;
+    }
+    @media only screen and (min-width: 850px) {
+        width: 40vw;
+    }
+}
+
+.tasks_container {
+    @include flexo;
+    flex-wrap: wrap;
+    overflow: auto;
+    height: 10vh;
+    width: 80vw;
+    border-bottom: 1px solid black;
+    @media only screen and (min-width: 690px) {
+        width: 70vw;
+        height: 17vh;
+    }
+    @media only screen and (min-width: 850px) {
+        width: 40vw;
+    }
+}
+
+.card_name {
+    font-size: 20px;
+}

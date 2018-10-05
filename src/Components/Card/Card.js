@@ -27,7 +27,7 @@ class Card extends Component {
     }
 
     async componentDidUpdate(prevProps) {
-        if(prevProps.restoreTask !== this.props.restoreTask) {
+        if (prevProps.restoreTask !== this.props.restoreTask) {
             let tasksRes = await axios.get(`/api/tasks/${this.props.card.card_id}`)
             this.setState({
                 tasks: tasksRes.data
@@ -48,25 +48,25 @@ class Card extends Component {
     }
 
     async handleKeyPress(e, edit, value) {
-        if(e.key === "Enter" && this.state[e.target.name].length > 0) {
+        if (e.key === "Enter" && this.state[e.target.name].length > 0) {
             this.setState({
                 [edit]: false
             })
-            if(e.target.name === "cardName") {
-                axios.put(`/api/card-name`, {name: value, cardId: this.props.card.card_id})
+            if (e.target.name === "cardName") {
+                axios.put(`/api/card-name`, { name: value, cardId: this.props.card.card_id })
                 this.setState({
                     cardName: value
                 })
             }
-            else if(e.target.name === "taskName") {
-               let newTask = await axios.post("/api/task", { name: value, cardId: this.props.card.card_id, boardId: this.props.card.board_id})
-               this.setState({
-                   tasks: [...this.state.tasks, newTask.data],
-                   taskName: ""
-               })
+            else if (e.target.name === "taskName") {
+                let newTask = await axios.post("/api/task", { name: value, cardId: this.props.card.card_id, boardId: this.props.card.board_id })
+                this.setState({
+                    tasks: [...this.state.tasks, newTask.data],
+                    taskName: ""
+                })
             }
         }
-        else if(e.key === "Enter" && this.state[e.target.name].length === 0) {
+        else if (e.key === "Enter" && this.state[e.target.name].length === 0) {
             this.setState({
                 [edit]: false
             })
@@ -75,11 +75,11 @@ class Card extends Component {
 
     async recycleTask(taskId) {
         try {
-            let tasksRes = await axios.put("/api/task-archived", { archived: true, taskId, cardId: this.props.card.card_id, type: false})
+            let tasksRes = await axios.put("/api/task-archived", { archived: true, taskId, cardId: this.props.card.card_id, type: false })
             this.setState({
                 tasks: tasksRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -92,7 +92,7 @@ class Card extends Component {
     }
 
     render() {
-        if(this.state.tasks) {
+        if (this.state.tasks) {
             var task = this.state.tasks.map(task => {
                 return (
                     <Task key={task.task_id} task={task} recycleTask={this.recycleTask} />
@@ -100,37 +100,43 @@ class Card extends Component {
             })
         }
         return (
-            <div>
-                {
-                    this.state.editingCard
-                    ?
-                    <input type="text"
-                    name="cardName"
-                    value={this.state.cardName}
-                    onChange={this.updateInput}
-                    onKeyPress={(e) => this.handleKeyPress(e, "editingCard", this.state.cardName)}/>
-                    :
-                    <button
-                    name="editingCard"
-                    onClick={this.updateEditing}>{this.state.cardName}</button>
-                    
-                }
-                <button onClick={() => this.props.recycleCard(this.props.card.card_id)}>Recycle</button>
-                {task}
-                {
-                    this.state.addingTask
-                    ?
+            <div className="card">
+                <div className="card_info">
+                    {
+                        this.state.editingCard
+                            ?
                             <input type="text"
-                            placeholder="Enter Task Title"
-                            name="taskName"
-                            value={this.state.taskName}
-                            onChange={this.updateInput}
-                            onKeyPress={(e) => this.handleKeyPress(e, "addingTask", this.state.taskName)}/> 
-                    :
-                        <button
-                        name="addingTask"
-                        onClick={this.updateEditing}>Add Task</button>
-                }
+                                name="cardName"
+                                value={this.state.cardName}
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "editingCard", this.state.cardName)} />
+                            :
+                            <button className="not_actual_button card_name"
+                                name="editingCard"
+                                onClick={this.updateEditing}>{this.state.cardName}</button>
+
+                    }
+                    <button className="actual_button" onClick={() => this.props.recycleCard(this.props.card.card_id)}>Recycle</button>
+                </div>
+                <div className="tasks_container">
+                    {task}
+                </div>
+                <section>
+                    {
+                        this.state.addingTask
+                            ?
+                            <input type="text"
+                                placeholder="Enter Task Title"
+                                name="taskName"
+                                value={this.state.taskName}
+                                onChange={this.updateInput}
+                                onKeyPress={(e) => this.handleKeyPress(e, "addingTask", this.state.taskName)} />
+                            :
+                            <button className="actual_button"
+                                name="addingTask"
+                                onClick={this.updateEditing}>Add Task</button>
+                    }
+                </section>
             </div>
         )
     }
