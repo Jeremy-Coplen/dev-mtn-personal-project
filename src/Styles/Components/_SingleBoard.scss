@@ -18,7 +18,7 @@
     width: 100vw;
     border-bottom: 1px solid black;
     margin-bottom: 10px;
-    height: 15vh;
+    height: auto;
     padding: 5px;
     img {
         width: 65px;
@@ -31,7 +31,7 @@
         font-size: 20px;
     }
     @media only screen and (min-width: 1050px) {
-        height: 17vh;
+        height: 10vh;
         button {
             font-size: 25px;
         }
@@ -52,7 +52,7 @@
     @media only screen and (min-width: 690px) {
     }
     @media only screen and (min-width: 850px) {
-        @include flexo(row, space-around);
+        @include flexo($align: flex-start);
     }
 }
 

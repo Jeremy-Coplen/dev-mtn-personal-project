@@ -14,9 +14,62 @@
     button {
         background: transparent;
         border: 1px solid black;
+        width: 77vw;
+        text-align: left;
+        word-wrap: break-word;
+        margin-bottom: 10px;
+        margin-left: 5px;
+    }
+    @media only screen and (min-width: 1050px) {
+        button {
+            width: 59vw;
+        }
     }
 }
 
 .task_display_none {
     display: none;
+}
+
+.task_modal {
+    @include flexo(column, flex-start, flex-end);
+    @include shadow;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80vw;
+    height: 50vh;
+    @media only screen and (min-width: 1050px) {
+        width: 60vw;
+        left: 20%;
+    }
+}
+
+.task_modal_content {
+    @include flexo(column, center, flex-start);
+    width: 80vw;
+    margin-top: 5px;
+    h2 {
+        margin-left: 5px;
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 60vw;
+    }
+}
+
+.task_discription {
+    width: 77vw;
+    height: 50vh;
+    p {
+        @include flexo(row, flex-start, flex-start);
+        width: 75vw;
+        height: 43vh;
+        overflow: auto;
+    }
+    @media only screen and (min-width: 1050px) {
+        p {
+            width: 58vw;
+            height: 40vh;
+        }
+    }
 }
