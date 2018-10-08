@@ -3,12 +3,12 @@
 
 .single_board {
     @include flexo(column, flex-start, flex-start);
+    background-size: cover;
     position: absolute;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    margin-top: -5px;
     section {
         @include flexo;
         width: 100vw;
@@ -21,6 +21,7 @@
     background: $medium_opacity;
     width: 100vw;
     border-bottom: 1px solid black;
+    margin-top: -5px;
     margin-bottom: 10px;
     height: auto;
     padding: 5px;

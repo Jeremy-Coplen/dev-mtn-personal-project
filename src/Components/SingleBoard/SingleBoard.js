@@ -83,7 +83,7 @@ class SingleBoard extends Component {
                     [edit]: false
                 })
                 if (e.target.name === "boardImage") {
-                    axios.put(`/api/board-image}`, { image: value, boardId: this.props.match.params.boardid })
+                    axios.put(`/api/board-image`, { image: value, boardId: this.props.match.params.boardid })
                 }
                 else if (e.target.name === "boardName") {
                     axios.put(`/api/board-name`, { name: value, boardId: this.props.match.params.boardid })

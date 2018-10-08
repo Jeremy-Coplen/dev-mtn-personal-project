@@ -186,6 +186,7 @@ module.exports = {
     updateBoardImage: (req, res) => {
         const db = req.app.get("db")
         const { image, boardId } = req.body
+        console.log(image)
 
         db.update_board_image([image, boardId])
         .then(() => {

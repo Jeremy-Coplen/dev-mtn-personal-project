@@ -52,7 +52,7 @@ class Dashboard extends Component {
                     <Link className="link_button" to="/teams"><div>Teams</div></Link>
                 </div>
                 {
-                    lastBoardViewed
+                    lastBoardViewed.board_image
                         ?
                         <Link to={`/board/${lastBoardViewed.board_id}`}>
                             <div>
