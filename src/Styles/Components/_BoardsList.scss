@@ -8,9 +8,6 @@
     top: 0;
     left: 0;
     height: 100vh;
-    @media only screen and (min-width: 1050px) {
-        @include flexo($align: flex-start);
-    }
 }
 
 .boards {
@@ -31,6 +28,9 @@
         font-size: 18px;
         width: 110px;
     }
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .add_button {
@@ -42,5 +42,8 @@
         font-size: 18px;
         width: 110px;
         right: 120px;
+    }
+    &:hover {
+        cursor: pointer;
     }
 }

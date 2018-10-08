@@ -64,6 +64,9 @@
     margin-top: 5px;
     border-radius: 5px;
     width: 100px;
+    &:hover {
+        background: grey;
+    }
     @media only screen and (min-width: 690px) {
         margin-right: 10px;
         margin-top: 2px;
@@ -79,6 +82,10 @@
     margin-left:  5px;
     margin-right: 5px;
     height: 32px;
+    &:hover {
+        cursor: pointer;
+        background: grey;
+    }
     @media only screen and (min-width: 429px) {
         height: 20px;
     }
@@ -103,11 +110,13 @@
     border-radius: 5px;
     width: 80px;
     height: 18px;
-    padding-top: 1px;
+    padding: 1px;
+    &:hover {
+        background: grey;
+    }
     @media only screen and (min-width: 690px) {
         height: 22px;
         margin-right: 10px;
-        padding-top: 0;
     }
     @media only screen and (min-width: 960px) {
         margin-left: 10px;

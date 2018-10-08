@@ -64,6 +64,10 @@
     border: none;
     background: $light;
     border-radius: 5px;
+    &:hover {
+        cursor: pointer;
+        background: grey;
+    }
 }
 
 .not_actual_button {

@@ -27,6 +27,10 @@
     font-size: 25px;
     padding-top: 15px;
     border-radius: 10px;
+    &:hover {
+        cursor: pointer;
+        background: linear-gradient(to right, rgb(6, 18, 192), rgb(0, 167, 42));
+    }
 }
 
 .logo_name {
