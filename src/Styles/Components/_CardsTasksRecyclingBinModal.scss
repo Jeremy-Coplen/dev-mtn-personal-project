@@ -17,3 +17,57 @@
 .cards_tasks_recycle_bin_display_none {
     display: none;
 }
+
+.cards-tasks_recycling_bin {
+    @include shadow;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80vw;
+    height: 50vh;
+    overflow: auto;
+    @media only screen and (min-width: 1050px) {
+        width: 60vw;
+        left: 20%;
+    }
+}
+
+.cards-tasks_recycling_bin_content {
+    @include flexo(column, flex-start, flex-end)
+}
+
+.archived_cards_tasks_content {
+    @include flexo(column);
+    width: 80vw;
+    @media only screen and (min-width: 690px) {
+        h1 {
+            font-size: 20px;
+        }
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 60vw;
+    }
+}
+
+.archived_cards_tasks {
+    @include flexo(column, center, flex-start);
+    width: 80vw;
+    @media only screen and (min-width: 690px) {
+        @include flexo(column);
+        width: 60vw;
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 50vw;
+    }
+}
+
+.archived_cards_tasks_container {
+    width: 80vw;
+    @media only screen and (min-width: 690px) {
+            @include flexo(column);
+            width: 60vw;
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 50vw;
+    }
+}

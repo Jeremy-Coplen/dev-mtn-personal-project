@@ -1,0 +1,27 @@
+@import "../variables";
+@import "../mixins";
+
+.archived_card_tasks {
+    @include flexo($justify: space-between);
+    @include border;
+    width: 78vw;
+    margin: 5px;
+    padding: 5px;
+    @media only screen and (min-width: 690px) {
+        width: 60vw;
+    }
+    @media only screen and (min-width: 1050px) {
+        width: 40vw;
+    }
+}
+
+.archived_buttons_container {
+    @include flexo;
+}
+
+.archived_buttons {
+    @include border;
+    background-color: $medium;
+    margin-right: 5px;
+    padding: 2px;
+}

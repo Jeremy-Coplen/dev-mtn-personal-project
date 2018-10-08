@@ -12,10 +12,12 @@ class ArchivedCard extends Component {
     render() {
         const { archivedCard } = this.state
         return (
-            <div>
+            <div className="archived_card_tasks">
                 <h2>{archivedCard.card_name}</h2>
-                <button onClick={() => this.props.restoreCard(archivedCard.card_id)}>Restore</button>
-                <button onClick={() => this.props.deleteCard(archivedCard.card_id)}>Delete</button>
+                <div className="archived_buttons_container">
+                    <div className="archived_buttons" onClick={() => this.props.restoreCard(archivedCard.card_id)}>Restore</div>
+                    <div className="archived_buttons" onClick={() => this.props.deleteCard(archivedCard.card_id)}>Delete</div>
+                </div>
             </div>
         )
     }

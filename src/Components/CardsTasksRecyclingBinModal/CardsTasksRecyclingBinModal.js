@@ -20,20 +20,20 @@ class CardsTasksRecyclingBinModal extends Component {
     }
 
     async componentDidMount() {
-            try {
-                let cardsRes = await axios.get(`/api/archived-cards/${this.props.match.params.boardid}`)
-                let tasksRes = await axios.get(`/api/archived-tasks/${this.props.match.params.boardid}`)
-                this.setState({
-                    archivedCards: cardsRes.data,
-                    archivedTasks: tasksRes.data
-                })
-            }catch(err) {
-                console.log(err)
-            }
+        try {
+            let cardsRes = await axios.get(`/api/archived-cards/${this.props.match.params.boardid}`)
+            let tasksRes = await axios.get(`/api/archived-tasks/${this.props.match.params.boardid}`)
+            this.setState({
+                archivedCards: cardsRes.data,
+                archivedTasks: tasksRes.data
+            })
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     async componentDidUpdate(prevProps) {
-        if(prevProps.show !== this.props.show) {
+        if (prevProps.show !== this.props.show) {
             try {
                 let cardsRes = await axios.get(`/api/archived-cards/${this.props.match.params.boardid}`)
                 let tasksRes = await axios.get(`/api/archived-tasks/${this.props.match.params.boardid}`)
@@ -41,7 +41,7 @@ class CardsTasksRecyclingBinModal extends Component {
                     archivedCards: cardsRes.data,
                     archivedTasks: tasksRes.data
                 })
-            }catch(err) {
+            } catch (err) {
                 console.log(err)
             }
         }
@@ -49,24 +49,24 @@ class CardsTasksRecyclingBinModal extends Component {
 
     async restoreCard(cardId) {
         try {
-            let cardsRes = await axios.put("/api/card-archived", { archived: false, cardId, boardId: this.props.match.params.boardid, type: true})
+            let cardsRes = await axios.put("/api/card-archived", { archived: false, cardId, boardId: this.props.match.params.boardid, type: true })
             this.setState({
                 archivedCards: cardsRes.data
             })
             this.props.restoreCard()
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     async restoreTask(taskId) {
         try {
-            let tasksRes = await axios.put("/api/task-archived", { archived: false, taskId, boardId: this.props.match.params.boardid})
+            let tasksRes = await axios.put("/api/task-archived", { archived: false, taskId, boardId: this.props.match.params.boardid })
             this.setState({
                 archivedTasks: tasksRes.data
             })
             this.props.restoreTask()
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -77,7 +77,7 @@ class CardsTasksRecyclingBinModal extends Component {
             this.setState({
                 archivedCards: cardsRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -88,20 +88,20 @@ class CardsTasksRecyclingBinModal extends Component {
             this.setState({
                 archivedTasks: tasksRes.data
             })
-        }catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
 
     render() {
-        if(this.state.archivedCards) {
-           var archivedCards = this.state.archivedCards.map(archivedCard => {
+        if (this.state.archivedCards) {
+            var archivedCards = this.state.archivedCards.map(archivedCard => {
                 return (
                     <ArchivedCard key={archivedCard.card_id} archivedCard={archivedCard} restoreCard={this.restoreCard} deleteCard={this.deleteCard} />
                 )
             })
         }
-        if(this.state.archivedTasks) {
+        if (this.state.archivedTasks) {
             var archivedTasks = this.state.archivedTasks.map(archivedTask => {
                 return (
                     <ArchivedTask key={archivedTask.task_id} archivedTask={archivedTask} restoreTask={this.restoreTask} deleteTask={this.deleteTask} />
@@ -111,12 +111,36 @@ class CardsTasksRecyclingBinModal extends Component {
         const showHideClassName = this.props.show ? "cards_tasks_recycle_bin_display" : "cards_tasks_recycle_bin_display_none"
         return (
             <div className={showHideClassName}>
-                <div>
-                    <button onClick={() => this.props.updateShow()}>Close</button>
-                    <h1>Cards:</h1>
-                    {archivedCards}
-                    <h1>Tasks:</h1>
-                    {archivedTasks}
+                <div className="cards-tasks_recycling_bin">
+                    <div className="cards-tasks_recycling_bin_content">
+                        <div className="close_button" onClick={() => this.props.updateShow()}>X</div>
+                        <div className="archived_cards_tasks_content">
+                            <h1>Cards:</h1>
+                            <div className="archived_cards_tasks">
+                                {
+                                    this.state.archivedCards
+                                        ?
+                                        <div className="archived_cards_tasks_container">
+                                            { archivedCards }
+                                        </div>
+                                        :
+                                        <h1>Empty</h1>
+                                }
+                            </div>
+                            <h1>Tasks:</h1>
+                            <div className="archived_cards_tasks">
+                                {
+                                    this.state.archivedTasks
+                                        ?
+                                        <div  className="archived_cards_tasks_container">
+                                            { archivedTasks }
+                                        </div>
+                                        :
+                                        <h1>Empty</h1>
+                                }
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )

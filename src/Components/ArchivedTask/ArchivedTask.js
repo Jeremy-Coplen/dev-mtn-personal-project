@@ -12,10 +12,12 @@ class ArchivedTask extends Component {
     render() {
         const { archivedTask } = this.state
         return (
-            <div>
+            <div className="archived_card_tasks">
                 <h2>{archivedTask.task_name}</h2>
-                <button onClick={() => this.props.restoreTask(archivedTask.task_id)}>Restore</button>
-                <button onClick={() => this.props.deleteTask(archivedTask.task_id)}>Delete</button>
+                <div className="archived_buttons_container">
+                    <div className="archived_buttons" onClick={() => this.props.restoreTask(archivedTask.task_id)}>Restore</div>
+                    <div className="archived_buttons" onClick={() => this.props.deleteTask(archivedTask.task_id)}>Delete</div>
+                </div>
             </div>
         )
     }

@@ -37,7 +37,6 @@ class Dashboard extends Component {
 
     render() {
         const { lastBoardViewed } = this.state
-        console.log(lastBoardViewed)
         return (
             <div className="dashboard">
                 <div className="side_bar">
