@@ -62,7 +62,6 @@ class BoardsRecyclingBinModal extends Component {
     }
 
     render() {
-        console.log(this.state.archivedBoards)
         if (this.state.archivedBoards) {
             var archivedBoards = this.state.archivedBoards.map(archivedBoard => {
                 return (

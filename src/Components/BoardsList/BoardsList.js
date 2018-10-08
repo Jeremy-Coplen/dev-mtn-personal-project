@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 
 import { connect } from "react-redux"
-import { getUserData } from "../../Ducks/reducer"
+import { getUserData, updateBackgroundImage } from "../../Ducks/reducer"
 
 import Board from "../Board/Board"
 import BoardModal from "./BoardModal"
@@ -27,6 +27,7 @@ class BoardsList extends Component {
         try {
             let userRes = await axios.get("/api/user-data")
             this.props.getUserData(userRes.data)
+            this.props.updateBackgroundImage(this.props.user.background_image)
             let boardsRes = await axios.get("/api/user-boards")
             this.setState({
                 boards: boardsRes.data
@@ -82,7 +83,8 @@ class BoardsList extends Component {
             })
         }
         return (
-            <div className="boards_list">
+            <div className="boards_list" style={{backgroundImage: `url(${this.props.backgroundImage})`}}>
+                <div className="nav_bar_space"></div>
                 <div className=" link_button recycling_button" onClick={this.updateRecycleShow}>Recycling Bin</div>
                 <div className=" link_button add_button" onClick={this.updateBoardShow}>Add board</div>
                 <div className="boards">
@@ -97,12 +99,14 @@ class BoardsList extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        backgroundImage: state.backgroundImage
     }
 }
 
 const actionOutputs = {
-    getUserData: getUserData
+    getUserData: getUserData,
+    updateBackgroundImage: updateBackgroundImage
 }
 
 const connected = connect(mapStateToProps, actionOutputs)

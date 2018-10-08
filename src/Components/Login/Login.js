@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 
 class Login extends Component {
-
     login() {
         const {
             REACT_APP_DOMAIN,

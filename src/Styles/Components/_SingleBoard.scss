@@ -3,8 +3,12 @@
 
 .single_board {
     @include flexo(column, flex-start, flex-start);
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100vw;
-    height: 90vh;
+    height: 100vh;
+    margin-top: -5px;
     section {
         @include flexo;
         width: 100vw;
@@ -31,7 +35,6 @@
         font-size: 20px;
     }
     @media only screen and (min-width: 1050px) {
-        height: 10vh;
         button {
             font-size: 25px;
         }

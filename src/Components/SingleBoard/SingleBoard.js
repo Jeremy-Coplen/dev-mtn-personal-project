@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import axios from "axios"
 
 import { connect } from "react-redux"
-import { getUserData } from "../../Ducks/reducer"
+import { getUserData, updateBackgroundImage } from "../../Ducks/reducer"
 
 import Card from "../Card/Card"
 import CardsTasksRecyclingBinModal from "../CardsTasksRecyclingBinModal/CardsTasksRecyclingBinModal"
@@ -38,6 +38,7 @@ class SingleBoard extends Component {
         try {
             let userRes = await axios.get("/api/user-data")
             this.props.getUserData(userRes.data)
+            this.props.updateBackgroundImage(this.props.user.background_image)
         } catch (err) {
             if (err.response.status === 401) {
                 alert("Go Login")
@@ -157,7 +158,8 @@ class SingleBoard extends Component {
             })
         }
         return (
-            <div className="single_board">
+            <div className="single_board" style={{ backgroundImage: `url(${this.props.backgroundImage})` }}>
+                <div className="nav_bar_space"></div>
                 <div className="single_board_info">
                     {
                         this.state.editingImage
@@ -227,12 +229,14 @@ class SingleBoard extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        backgroundImage: state.backgroundImage
     }
 }
 
 const actionOutputs = {
-    getUserData: getUserData
+    getUserData: getUserData,
+    updateBackgroundImage: updateBackgroundImage
 }
 
 const connected = connect(mapStateToProps, actionOutputs)

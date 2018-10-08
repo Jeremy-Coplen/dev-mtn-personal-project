@@ -3,7 +3,10 @@
 
 .boards_list {
     @include flexo(column, flex-start, flex-start);
-    height: 90vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
     @media only screen and (min-width: 1050px) {
         @include flexo($align: flex-start);
     }

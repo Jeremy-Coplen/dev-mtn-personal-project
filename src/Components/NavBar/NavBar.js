@@ -3,7 +3,7 @@ import { Link, withRouter } from "react-router-dom"
 import axios from "axios"
 
 import { connect } from "react-redux"
-import { getUserData } from "../../Ducks/reducer"
+import { getUserData, updateBackgroundImage } from "../../Ducks/reducer"
 
 class NavBar extends Component {
     constructor(props) {
@@ -21,7 +21,6 @@ class NavBar extends Component {
             this.setState({
                 backgroundImage: this.props.user.background_image
             })
-                document.body.style.backgroundImage = `url("${this.props.user.background_image}")`
         }
     }
 
@@ -47,13 +46,13 @@ class NavBar extends Component {
                 await axios.put("/api/user-background", { backgroundImage: e.target.value })
                 let userRes = await axios.get("/api/user-data")
                 this.props.getUserData(userRes.data)
+                this.props.updateBackgroundImage(this.props.user.background_image)
             } catch (err) {
                 if (err.response.status === 401) {
                     alert("Go Login")
                     this.props.history.push("/")
                 }
             }
-                document.body.style.backgroundImage = `url("${e.target.value}")`
         }
         else if (e.key === "Enter" && this.state.backgroundImage.length === 0) {
             this.setState({
@@ -106,12 +105,14 @@ class NavBar extends Component {
 
 function mapStateToProps(state) {
     return {
-        user: state.user
+        user: state.user,
+        backgroundImage: state.backgroundImage
     }
 }
 
 const actionOutputs = {
-    getUserData: getUserData
+    getUserData: getUserData,
+    updateBackgroundImage: updateBackgroundImage
 }
 
 const connected = connect(mapStateToProps, actionOutputs)

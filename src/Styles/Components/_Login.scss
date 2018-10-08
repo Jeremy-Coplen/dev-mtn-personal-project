@@ -6,7 +6,8 @@
     @include flexo(column);
     width: 100vw;
     height: 100vh;
-    background: $dark;
+    background-image: url(https://c.s-microsoft.com/en-my/CMSImages/Hero_SMB_960x600.jpg?version=2939ec24-4f3f-96eb-f6ad-ab80a0b7e31c);
+    background-size: cover;
     text-align: center;
     font-family: "Chakra Petch", sans-serif;
     font-size: 30px;
@@ -40,7 +41,7 @@
     width: 200px;
     height: 200px;
     @media only screen and (min-width: 1200px) {
-        width: 350px;
-        height: 350px;
+        width: 250px;
+        height: 250px;
     }
 }

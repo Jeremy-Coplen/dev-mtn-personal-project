@@ -2,13 +2,12 @@
 @import "../mixins";
 @import url('https://fonts.googleapis.com/css?family=Chakra+Petch');
 
-body {
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
 .nav_bar {
     @include flexo;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
     font-size: 15px;
     overflow: auto;
     text-align: center;
