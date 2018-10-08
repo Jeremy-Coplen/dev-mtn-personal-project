@@ -15,8 +15,8 @@ class ArchivedCard extends Component {
             <div className="archived_card_tasks">
                 <h2>{archivedCard.card_name}</h2>
                 <div className="archived_buttons_container">
-                    <div className="archived_buttons" onClick={() => this.props.restoreCard(archivedCard.card_id)}>Restore</div>
-                    <div className="archived_buttons" onClick={() => this.props.deleteCard(archivedCard.card_id)}>Delete</div>
+                    <div className="restore_delete_button" onClick={() => this.props.restoreCard(archivedCard.card_id)}>Restore</div>
+                    <div className="restore_delete_button" onClick={() => this.props.deleteCard(archivedCard.card_id)}>Delete</div>
                 </div>
             </div>
         )

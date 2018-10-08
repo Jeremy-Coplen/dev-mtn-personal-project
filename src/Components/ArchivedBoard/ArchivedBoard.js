@@ -16,8 +16,8 @@ class ArchivedBoard extends Component {
                 <img src={archivedBoard.board_image} alt="board"/>
                 <h1>{archivedBoard.board_name}</h1>
                 <h2>type: {archivedBoard.board_type}</h2>
-                <div onClick={() => this.props.restoreBoard(this.state.archivedBoard.board_id)}>Restore</div>
-                <div onClick={() => this.props.deleteBoard(archivedBoard.board_id)}>Delete</div>
+                <div className="restore_delete_button" onClick={() => this.props.restoreBoard(this.state.archivedBoard.board_id)}>Restore</div>
+                <div className="restore_delete_button" onClick={() => this.props.deleteBoard(archivedBoard.board_id)}>Delete</div>
             </div>
         )
     }

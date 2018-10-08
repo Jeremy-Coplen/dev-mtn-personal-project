@@ -53,6 +53,10 @@
     border-top: none;
     border-right: none;
     padding: 2px;
+    &:hover {
+        cursor: pointer;
+        background: grey;
+    }
 }
 
 .confirm_button {

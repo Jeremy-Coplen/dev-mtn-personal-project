@@ -9,9 +9,6 @@
     right: 0;
     bottom: 0;
     overflow: hidden;
-    div {
-        background: $light;
-    }
 }
 
 .cards_tasks_recycle_bin_display_none {
@@ -20,6 +17,7 @@
 
 .cards-tasks_recycling_bin {
     @include shadow;
+    background: $light;
     position: absolute;
     top: 10%;
     left: 10%;
@@ -38,6 +36,7 @@
 
 .archived_cards_tasks_content {
     @include flexo(column);
+    background: $medium;
     width: 80vw;
     @media only screen and (min-width: 690px) {
         h1 {
@@ -45,7 +44,7 @@
         }
     }
     @media only screen and (min-width: 1050px) {
-        width: 60vw;
+        width: 50vw;
     }
 }
 
@@ -69,5 +68,12 @@
     }
     @media only screen and (min-width: 1050px) {
         width: 50vw;
+    }
+}
+
+.big_archived_cards_tasks_content {
+    @media only screen and (min-width: 1050px) {
+        @include flexo(column);
+        width: 60vw;
     }
 }

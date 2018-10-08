@@ -76,11 +76,13 @@ class BoardsRecyclingBinModal extends Component {
                     <div className="close_button" onClick={() => this.props.updateShow()}>X</div>
                     {
                         this.state.archivedBoards.length !== 0
-                        ?
-                            <div className="archived_boards">
-                                {archivedBoards}
+                            ?
+                            <div className="big_boards">
+                                <div className="archived_boards">
+                                    {archivedBoards}
+                                </div>
                             </div>
-                        :
+                            :
                             <h1>Empty</h1>
                     }
                 </div>

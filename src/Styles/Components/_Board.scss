@@ -10,6 +10,9 @@
     width: 97vw;
     padding: 5px;
     border-radius: 5px;
+    &:hover {
+        background: $dark_opacity
+    }
     @media only screen and (min-width: 690px) {
         @include flexo($justify: space-between)
     }

@@ -114,30 +114,32 @@ class CardsTasksRecyclingBinModal extends Component {
                 <div className="cards-tasks_recycling_bin">
                     <div className="cards-tasks_recycling_bin_content">
                         <div className="close_button" onClick={() => this.props.updateShow()}>X</div>
-                        <div className="archived_cards_tasks_content">
-                            <h1>Cards:</h1>
-                            <div className="archived_cards_tasks">
-                                {
-                                    this.state.archivedCards
-                                        ?
-                                        <div className="archived_cards_tasks_container">
-                                            { archivedCards }
-                                        </div>
-                                        :
-                                        <h1>Empty</h1>
-                                }
-                            </div>
-                            <h1>Tasks:</h1>
-                            <div className="archived_cards_tasks">
-                                {
-                                    this.state.archivedTasks
-                                        ?
-                                        <div  className="archived_cards_tasks_container">
-                                            { archivedTasks }
-                                        </div>
-                                        :
-                                        <h1>Empty</h1>
-                                }
+                        <div className="big_archived_cards_tasks_content">
+                            <div className="archived_cards_tasks_content">
+                                <h1>Cards:</h1>
+                                <div className="archived_cards_tasks">
+                                    {
+                                        this.state.archivedCards
+                                            ?
+                                            <div className="archived_cards_tasks_container">
+                                                {archivedCards}
+                                            </div>
+                                            :
+                                            <h1>Empty</h1>
+                                    }
+                                </div>
+                                <h1>Tasks:</h1>
+                                <div className="archived_cards_tasks">
+                                    {
+                                        this.state.archivedTasks
+                                            ?
+                                            <div className="archived_cards_tasks_container">
+                                                {archivedTasks}
+                                            </div>
+                                            :
+                                            <h1>Empty</h1>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
