@@ -1,0 +1,31 @@
+@import "../mixins";
+@import "../variables";
+
+.tutorial_modal_display {
+    background: $medium_opacity;
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.tutorial_modal_display_none {
+    display: none;
+}
+
+.tutorial_modal_content {
+    @include flexo(column, center, flex-end);
+    background: $light;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80vw;
+}
+
+.tutorial_content {
+    @include flexo (column);
+    width: 80vw;
+}

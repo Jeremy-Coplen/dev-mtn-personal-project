@@ -62,8 +62,9 @@
 .link_button {
     background: $light;
     margin-top: 5px;
+    margin-left: 20px;
     border-radius: 5px;
-    width: 100px;
+    width: 80px;
     &:hover {
         background: grey;
     }
@@ -94,7 +95,7 @@
         margin-left: 0;
         margin-right: 10px;
     }
-    @media only screen and (min-width: 732px) {
+    @media only screen and (min-width: 795px) {
         height: 20px;
         margin-top: 1px;
     }
@@ -132,5 +133,18 @@
     @media only screen and (min-width: 960px) {
         display: flex;
         font-family: "Chakra Petch", sans-serif;
+    }
+}
+
+.tutorial_button {
+    background: $light;
+    border-radius: 5px;
+    padding: 2px;
+    &:hover {
+        cursor: pointer;
+        background: grey;
+    }
+    @media only screen and (min-width: 600px) {
+        margin-right: 5px;
     }
 }

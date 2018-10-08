@@ -64,6 +64,10 @@
     @include border;
     border-right: none;
     padding: 2px;
+    &:hover {
+        cursor: pointer;
+        background: grey;
+    }
 }
 
 .board_modal_input {

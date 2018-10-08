@@ -5,15 +5,19 @@ import axios from "axios"
 import { connect } from "react-redux"
 import { getUserData, updateBackgroundImage } from "../../Ducks/reducer"
 
+import TutorialModal from "../TutorialModal/TutorialModal"
+
 class NavBar extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             editingBackgroundImage: false,
-            backgroundImage: ""
+            backgroundImage: "",
+            show: false
         }
         this.handleKeyPress = this.handleKeyPress.bind(this)
+        this.updateShow = this.updateShow.bind(this)
     }
 
     componentDidUpdate(prevProps) {
@@ -61,6 +65,12 @@ class NavBar extends Component {
         }
     }
 
+    updateShow() {
+        this.setState({
+            show: !this.state.show
+        })
+    }
+
     render() {
         const { user } = this.props
         return (
@@ -92,12 +102,14 @@ class NavBar extends Component {
                                         :
                                         <div className="background_button" onClick={() => this.updateEditingBackgroundImage()}>Change Background</div>
                                 }
+                                <div className="tutorial_button" onClick={this.updateShow}>Tutorial</div>
                                 <img className="profile_image" src={user.profile_image} alt="profile" />
                                 <h3>{user.username}</h3>
                                 <a className="logout_button" href={`${process.env.REACT_APP_LOGOUT}`}><div>Logout</div></a>
                             </div>
                         </div>
                 }
+                <TutorialModal show={this.state.show} updateShow={this.updateShow}/>
             </div>
         )
     }
